@@ -11,6 +11,14 @@ Reusable Artificial Intelligence Experiments
 - A* Route Planning (mostly broken ATM)
 - Random waypoint navigation
 
+## TODO (in order of importance)
+
+- Fix `Assets/Pathfinding Scripts/Pathfinder.js` to use proper A*
+- Create a Waypoint follower that follows paths computed by Pathfinder
+- Allow Waypoint followers to go "off-path" to reach goals close to waypoints
+- Add support for navigation meshes
+- Restructure `Assets/Editor/PathfindingEditor.js`, which is badly written
+
 ##License: MIT
 
 Copyright (c) 2013 Julian Ceipek
