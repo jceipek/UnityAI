@@ -3,17 +3,17 @@ UnityAI
 
 Reusable Artificial Intelligence Experiments
 
-![Demo](https://raw.github.com/jceipek/UnityAI/master/PathfindingDemo.png "Pathfinding Editor")
+![Elevation Demo](https://raw.github.com/jceipek/UnityAI/master/PathfindingDemo.png "Pathfinding Editor")
+![Demo Maze](https://raw.github.com/jceipek/UnityAI/master/MazeFind.png "Maze Solution")
 
 ## Current Features
 
 - Pathfinding editor for waypoints and pathing visualization
-- A* Route Planning (mostly broken ATM)
+- A* Route Planning
 - Random waypoint navigation
 
 ## TODO (in order of importance)
 
-- Fix `Assets/Pathfinding Scripts/Pathfinder.js` to use proper A*
 - Create a Waypoint follower that follows paths computed by Pathfinder
 - Allow Waypoint followers to go "off-path" to reach goals close to waypoints
 - Add support for navigation meshes

@@ -21,9 +21,9 @@ function OnDrawGizmos() {
 		Gizmos.color = Color.cyan;	
 	}
 	
-	Gizmos.DrawWireSphere(transform.position, 1.0f);
+	Gizmos.DrawWireSphere(transform.position, 0.4f);
 
-	Gizmos.color = Color.green;
+	Gizmos.color = Color.cyan;
 	for (var i = 0; i < linkedTo.length; i++) {
         Gizmos.DrawLine (transform.position, linkedTo[i].transform.position);
 	}

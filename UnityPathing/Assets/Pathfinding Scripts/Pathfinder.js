@@ -31,8 +31,11 @@ function FindRoute (start : Waypoint, goal : Waypoint) : List.<Waypoint> {
 	var explored : HashSet.<Waypoint> = new HashSet.<Waypoint>(); // Set, what have we explored?
 
 	var pathTo = new Dictionary.<Waypoint,Waypoint>();  // Used to keep track of the path
+	var gCost = new Dictionary.<Waypoint,float>();  // Used to keep track of the path
 
    	pathTo[start] = null;
+   	gCost[start] = 0.0;
+
 
 	frontier.Add(0.0 + HeuristicCostEstimate(start, goal), start);
 
@@ -65,8 +68,14 @@ function FindRoute (start : Waypoint, goal : Waypoint) : List.<Waypoint> {
 		for (var i = 0; i < leaf.linkedTo.length; i++) {
 			var connected : Waypoint = leaf.linkedTo[i];
 			if (!explored.Contains(connected) && !frontier.ContainsValue(connected)) {
+				/*if (pathTo.ContainsKey(leaf)) {
+					Debug.Log("OVERWRITE "+leaf.gameObject.name);
+				} else {
+					Debug.Log("Nope");
+				}*/
+				gCost[connected] = gCost[leaf] + WaypointCost(leaf, connected);
 				pathTo[connected] = leaf;
-				frontier.Add(WaypointCost(leaf, connected)+HeuristicCostEstimate(connected, goal), connected);
+				frontier.Add(gCost[connected]+HeuristicCostEstimate(connected, goal), connected);
 			}			
 		}
 	}
