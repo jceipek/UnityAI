@@ -16,17 +16,14 @@ var endWaypoint : Waypoint;
 var idealWaypointPath : List.<Waypoint>; // Used to debug the path found during search
 
 function HeuristicCostEstimate(from : Waypoint, to : Waypoint) : float {
-	// TODO : Implement
 	return (from.gameObject.transform.position - to.gameObject.transform.position).magnitude;
 }
 
 function WaypointCost(from : Waypoint, to : Waypoint) : float {
-	// TODO : Implement
 	return (from.gameObject.transform.position - to.gameObject.transform.position).magnitude;
 }
 
 function FindRoute (start : Waypoint, goal : Waypoint) : List.<Waypoint> {
-	// TODO: FIXME
 	var frontier : SortedList.<float, Waypoint> = new SortedList.<float, Waypoint>(); // Priority Queue, what have we not explored?
 	var explored : HashSet.<Waypoint> = new HashSet.<Waypoint>(); // Set, what have we explored?
 
