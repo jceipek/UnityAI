@@ -11,17 +11,19 @@ Reusable Artificial Intelligence Experiments
 - Pathfinding editor for waypoints and pathing visualization
 - A* Route Planning
 - Random waypoint navigation
+- Waypoint to waypoint following using Pathfinder
+- Navigation mesh processor in the Tools Menu (creates a waypoint network from a selected mesh)
 
 ## TODO (in order of importance)
 
-- Create a Waypoint follower that follows paths computed by Pathfinder
 - Allow Waypoint followers to go "off-path" to reach goals close to waypoints
-- Add support for navigation meshes
+- Give waypoints triangle vertices to indicate movable area for navigation meshes
+- Add full support for navigation meshes
 - Restructure `Assets/Editor/PathfindingEditor.js`, which is badly written
 
 ##License: MIT
 
-Copyright (c) 2013 Julian Ceipek
+Copyright (c) 2013 Julian Ceipek, Alyssa Bawgus, Eric Tappan, Alex Adkins
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
