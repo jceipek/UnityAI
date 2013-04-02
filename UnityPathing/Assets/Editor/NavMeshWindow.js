@@ -1,5 +1,6 @@
 #pragma strict
 
+//
 class NavMeshWindow extends EditorWindow {
 	class Triangle {
 		var verts : Vector3[];
@@ -41,6 +42,9 @@ class NavMeshWindow extends EditorWindow {
 	}
 
 	function MakeWaypointNetworkFromNavmesh(navmesh : GameObject) {
+		var aiNavmesh : GameObject = new GameObject("AI Navmesh");
+		aiNavmesh.transform.position = navmesh.transform.position;	
+		aiNavmesh.transform.rotation = navmesh.transform.rotation;
 		var tempTriangles : List.<Triangle> = new List.<Triangle>();
 		var mesh : Mesh = navmesh.GetComponent(MeshFilter).sharedMesh;
 		var vs : Vector3[] = mesh.vertices;
@@ -79,9 +83,12 @@ class NavMeshWindow extends EditorWindow {
                     "Generating Waypoint "+i+" of "+tempTriangles.Count+".",
                     (i+0.0+tempTriangles.Count)/(tempTriangles.Count * 3));
 
-			waypointNode = Instantiate(Resources.Load("WaypointNode")) as GameObject;
+			waypointNode = Instantiate(Resources.Load("NavmeshNode")) as GameObject;
+			waypointNode.transform.parent = aiNavmesh.transform;
 			waypointNode.transform.position = navmesh.transform.position + navmesh.transform.TransformDirection(tempTriangles[i].centerPoint);
 			waypointNode.name = "WaypointNode_"+i;
+			var navmeshGeo : NavmeshGeometry = waypointNode.GetComponent(NavmeshGeometry) as NavmeshGeometry;
+			navmeshGeo.verts = tempTriangles[i].verts;
 			triangleToWaypoint[tempTriangles[i]] = waypointNode.GetComponent(Waypoint) as Waypoint;
 		}
 
@@ -108,6 +115,7 @@ class NavMeshWindow extends EditorWindow {
         window.Show();
     }
     
+    //Updates interface
     function OnGUI () {
     	if (Selection.activeGameObject != null && Selection.activeGameObject.GetComponent(MeshFilter) != null) {
 			GUI.enabled = true;
@@ -121,13 +129,5 @@ class NavMeshWindow extends EditorWindow {
 			Undo.RegisterSceneUndo("Process NavMesh");
 			MakeWaypointNetworkFromNavmesh(Selection.activeGameObject);
     	}
-    }
-
-    // Custom GUILayout progress bar.
-    function ProgressBar (value : float, label : String) {
-        // Get a rect for the progress bar using the same margins as a textfield:
-        var rect : Rect = GUILayoutUtility.GetRect (18, 18, "TextField");
-        EditorGUI.ProgressBar (rect, value, label);
-        EditorGUILayout.Space ();
     }
 }
