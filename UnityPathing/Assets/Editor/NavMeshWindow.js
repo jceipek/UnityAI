@@ -43,6 +43,7 @@ class NavMeshWindow extends EditorWindow {
 
 	function MakeWaypointNetworkFromNavmesh(navmesh : GameObject) {
 		var aiNavmesh : GameObject = new GameObject("AI Navmesh");
+		aiNavmesh.AddComponent("Pathfinder");
 		aiNavmesh.transform.position = navmesh.transform.position;	
 		aiNavmesh.transform.rotation = navmesh.transform.rotation;
 		var tempTriangles : List.<Triangle> = new List.<Triangle>();
