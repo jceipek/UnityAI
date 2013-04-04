@@ -15,5 +15,5 @@ BasicGame/Assembly-UnityScript.unityproj
 BasicGame/BasicGame-csharp.sln
 BasicGame/BasicGame.sln
 BasicGame/BasicGame.userprefs
-BasicGame/Library/
-BasicGame/Temp/
+BasicGame/Library
+BasicGame/Temp
