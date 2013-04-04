@@ -5,20 +5,17 @@ UnityPathing/Assembly-UnityScript.unityproj
 UnityPathing/UnityPathing-csharp.sln
 UnityPathing/UnityPathing.sln
 UnityPathing/UnityPathing.userprefs
-UnityPathing/Library/
-UnityPathing/Temp/
-<<<<<<< HEAD
-BasicGame/Temp/
-=======
+UnityPathing/Library/*
+UnityPathing/Library
+UnityPathing/Temp
+UnityPathing/Temp/*
 
+BasicGame/Temp
 BasicGame/Assembly-UnityScript-vs.unityproj
 BasicGame/Assembly-UnityScript.pidb
 BasicGame/Assembly-UnityScript.unityproj
 BasicGame/BasicGame-csharp.sln
 BasicGame/BasicGame.sln
 BasicGame/BasicGame.userprefs
-BasicGame/Library/
-BasicGame/Temp/
-
-
->>>>>>> 5fe41eec69ebb001abe7c66a280e775b8b080d51
+BasicGame/Library/*
+BasicGame/Temp/*

@@ -12,13 +12,13 @@ Reusable Artificial Intelligence Experiments
 - A* Route Planning
 - Random waypoint navigation
 - Waypoint to waypoint following using Pathfinder
-- Navigation mesh processor in the Tools Menu (creates a waypoint network from a selected mesh)
+- Navigation mesh processor in the Tools Menu (creates a NavmeshNode network with triangles and vertices from a selected mesh)
 
 ## TODO (in order of importance)
 
-- Allow Waypoint followers to go "off-path" to reach goals close to waypoints
-- Give waypoints triangle vertices to indicate movable area for navigation meshes
-- Add full support for navigation meshes
+- Allow Waypoint followers to go "off-path" to reach goals close to waypoints (optional)
+- Add pathing for navigation meshes
+- Add funnel algorithm for navigation meshes
 - Restructure `Assets/Editor/PathfindingEditor.js`, which is badly written
 
 ##License: MIT
