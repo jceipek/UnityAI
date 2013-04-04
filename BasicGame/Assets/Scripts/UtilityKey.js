@@ -12,4 +12,6 @@ function Update () {
 			ammoCount+=5; //add bullets	
 			}
 	}
+
 }
+
