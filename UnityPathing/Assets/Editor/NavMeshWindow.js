@@ -95,7 +95,7 @@ class NavMeshWindow extends EditorWindow {
 			tempTri = new Triangle(); // A new triangle instance to be added to tempTriangles
 			// Copy over the vertex locations from the mesh to the tempTri
 			for (j = 0; j<3; j++) {
-				tempTri.meshVerts[j] = meshVerts[meshTris[i+j]];
+				tempTri.verts[j] = meshVerts[meshTris[i+j]];
 			}
 			tempTri.updateCenterPoint(); // Set the center of the triangle to be the average of its points
 			
