@@ -30,7 +30,7 @@ class NavMeshWindow extends EditorWindow {
 		// Determines if the passed in triangle shares an edge with this triangle
 		function sharesEdgeWith(other:Triangle) : boolean {
 			var sharedVerts : int = 0; // Counter for verts shared between the triangles.
-			static var CLOSENESS : float = 0.0000000001; // If two verts are separated by this distance or less, 
+			var CLOSENESS : float = 0.0000000001; // If two verts are separated by this distance or less, 
 			                                             // we treat them as the same point
 			var thisVtIdx : int; var otherVtIdx : int;
 			for (thisVtIdx = 0; thisVtIdx < 3; thisVtIdx++) { // For each vertex in this triangle
