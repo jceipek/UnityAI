@@ -149,13 +149,11 @@ function GetEdgesFromWaypointList (waypointList : List.<Waypoint>, agentUp : Vec
 		edgeList[i-1,0] = tempVar[0];
 		edgeList[i-1,1] = tempVar[1];
 		
-		//edgeList[i-1,] = sharedEdge(navGeo, prevNavGeo);
-		
 		forwardVector = waypointRef.gameObject.transform.position - prevWaypoint.gameObject.transform.position;
-		if (AngleDir(forwardVector, edgeList[i-1,0], agentUp) == 1) {
-			tempVert = edgeList[i-1,1];
-			edgeList[i-1,1] = edgeList[i-1,0];
-			edgeList[i-1,0] = tempVert;
+		if (AngleDir(forwardVector, edgeList[i-1,0]-edgeList[i-1,1], agentUp) == 1) {
+			tempVert = edgeList[i-1,0];
+			edgeList[i-1,0] = edgeList[i-1,1];
+			edgeList[i-1,1] = tempVert;
 		}
 	}
 	return edgeList;
@@ -199,8 +197,8 @@ function FunnelAlgorithm (startPt : Vector3, goalPt : Vector3, agentUp : Vector3
 
 //returns -1 when to the left, 1 to the right, and 0 for forward/backward
 //adapted from: http://forum.unity3d.com/threads/31420-Left-Right-test-function
-public static function AngleDir(fwd: Vector3, sidePt: Vector3, up: Vector3) : int {
-    var perp: Vector3 = Vector3.Cross(fwd, sidePt);
+public static function AngleDir(fwd: Vector3, targetDir: Vector3, up: Vector3) : int {
+    var perp: Vector3 = Vector3.Cross(fwd, targetDir);
     var dir: float = Vector3.Dot(perp, up);
 
     if (dir > 0.0) {
