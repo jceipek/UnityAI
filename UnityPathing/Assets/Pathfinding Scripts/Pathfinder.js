@@ -172,7 +172,7 @@ static function sharedEdge(waypointA : NavmeshGeometry, waypointB : NavmeshGeome
 	return null;
 }
 
-function EqualVertices(vert1 : Vector3, vert2 : Vector3) : boolean {
+static function EqualVertices(vert1 : Vector3, vert2 : Vector3) : boolean {
 // If two verts are separated by this distance or less, we treat them as the same point	
 	return (vert1 - vert2).magnitude <= 0.0000000001;
 }
