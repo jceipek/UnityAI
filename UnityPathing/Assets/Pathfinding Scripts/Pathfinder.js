@@ -108,6 +108,10 @@ function FindRoute (start : Waypoint, goal : Waypoint) : List.<Waypoint> {
 // Funnel Algorithm
 //-------------------------------------------------------------------
 
+function TriArea(a : Vector3, b : Vector3, c : Vector3) : float {
+ 	return Vector3.Cross(b-a,c-a).magnitude/2;
+}
+
 // Returns an array of edges ordered according to a (left, right) scheme
 static function GetEdgesFromWaypointList (waypointList : List.<Waypoint>, agentUp : Vector3) : Vector3[,]	{
 	var edgeList : Vector3[,] = new Vector3[waypointList.Count-1,2]; // The array we are populating
