@@ -112,7 +112,7 @@ function TriArea(a : Vector3, b : Vector3, c : Vector3) : float {
  	return Vector3.Cross(b-a,c-a).magnitude/2;
 }
 
-// Returns an array of edges ordered according to a (left, right) scheme
+// Returns an array of edges ordered according to a (right, left) scheme
 static function GetEdgesFromWaypointList (waypointList : List.<Waypoint>, agentUp : Vector3) : Vector3[,]	{
 	var edgeList : Vector3[,] = new Vector3[waypointList.Count-1,2]; // The array we are populating
 
@@ -137,7 +137,7 @@ static function GetEdgesFromWaypointList (waypointList : List.<Waypoint>, agentU
 		
 		// The forward-pointing vector (in the direction toward the next waypoint)
 		forwardVector = waypointRef.gameObject.transform.position - prevWaypoint.gameObject.transform.position;
-		if (AngleDir(forwardVector, edgeList[i-1,0]-edgeList[i-1,1], agentUp) == 1) {
+		if (AngleDir(forwardVector, edgeList[i-1,0]-edgeList[i-1,1], agentUp) == -1) {
 			tempVert = edgeList[i-1,0];
 			edgeList[i-1,0] = edgeList[i-1,1];
 			edgeList[i-1,1] = tempVert;
@@ -172,17 +172,34 @@ static function sharedEdge(waypointA : NavmeshGeometry, waypointB : NavmeshGeome
 	return null;
 }
 
-function EqualVertices(vert1 : Vector3, vert2 : Vector3) : boolean {
+static function EqualVertices(vert1 : Vector3, vert2 : Vector3) : boolean {
 // If two verts are separated by this distance or less, we treat them as the same point	
 	return (vert1 - vert2).magnitude <= 0.0000000001;
 }
 		
-function FunnelAlgorithm (startPt : Vector3, goalPt : Vector3, agentUp : Vector3) : Vector3[,] {
+function FunnelAlgorithm (startPt : Vector3, goalPt : Vector3, agentUp : Vector3) : List.<Vector3> {
 	var start : Waypoint = GetClosestWaypointToPoint(startPt);
 	var goal : Waypoint = GetClosestWaypointToPoint(goalPt);
 	var waypointList : List.<Waypoint> = FindRoute (start, goal);
 	var edgeList : Vector3[,] = GetEdgesFromWaypointList(waypointList, agentUp);
-	return edgeList;
+
+	var portalApex : Vector3 = edgeList[0,0];
+	var portalLeft : Vector3 = edgeList[0,0];
+	var portalRight: Vector3 = edgeList[1,0];		//Check to see if correct!
+	
+	var edgeIdx : int;
+	var vertIdx : int;
+	var i : int;
+	for (edgeIdx = 1; edgeIdx < edgeList.Length/2; edgeIdx++) {
+		for (vertIdx = 0; vertIdx < 2; vertIdx++) {
+			i = edgeIdx + vertIdx;
+			//not finished	
+		}
+	}
+	
+	
+	
+	
 	//TODO: not finished, implement actual funnel algorithm
 }
 
