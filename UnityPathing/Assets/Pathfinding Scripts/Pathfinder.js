@@ -155,7 +155,7 @@ static function sharedEdge(waypointA : NavmeshGeometry, waypointB : NavmeshGeome
 	
 	for (aVtIdx = 0; aVtIdx < 3; aVtIdx++) { // For each vertex in this triangle
 		for (bVtIdx = 0; bVtIdx < 3; bVtIdx++) { // For each vertex in the other triangle
-			if (equalVerticies(aVerts[aVtIdx],bVerts[bVtIdx])) { // If the verts are the same i.e. on top of one another
+			if (EqualVerticies(aVerts[aVtIdx],bVerts[bVtIdx])) { // If the verts are the same i.e. on top of one another
 				sharedVerts[sharedVertCount] = aVerts[aVtIdx]; // Store the current vertex
 				sharedVertCount++;
 				break; // Since a vertex is shared at most once
@@ -168,7 +168,7 @@ static function sharedEdge(waypointA : NavmeshGeometry, waypointB : NavmeshGeome
 	return null;
 }
 
-function equalVertices(vert1 : Vector3, vert2 : Vector3) : boolean {
+function EqualVertices(vert1 : Vector3, vert2 : Vector3) : boolean {
 // If two verts are separated by this distance or less, we treat them as the same point	
 	return (vert1 - vert2).magnitude <= 0.0000000001;
 }
