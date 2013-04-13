@@ -108,8 +108,16 @@ function FindRoute (start : Waypoint, goal : Waypoint) : List.<Waypoint> {
 // Funnel Algorithm
 //-------------------------------------------------------------------
 
-function TriArea(a : Vector3, b : Vector3, c : Vector3) : float {
+/*function TriArea(a : Vector3, b : Vector3, c : Vector3) : float {
  	return Vector3.Cross(b-a,c-a).magnitude/2;
+}*/
+
+function TriArea2(a : Vector2, b : Vector2, c : Vector2) : float {
+	var ax : float = b.x - a.x;
+	var ay : float = b.y - a.y;
+	var bx : float = c.x - a.x;
+	var by : float = c.y - a.y;
+	return bx*ay - ax*by;
 }
 
 // Returns an array of edges ordered according to a (right, left) scheme
@@ -176,31 +184,56 @@ static function EqualVertices(vert1 : Vector3, vert2 : Vector3) : boolean {
 // If two verts are separated by this distance or less, we treat them as the same point	
 	return (vert1 - vert2).magnitude <= 0.0000000001;
 }
-		
+
+static function EqualVertices(vert1 : Vector2, vert2 : Vector2) : boolean {
+// If two verts are separated by this distance or less, we treat them as the same point	
+	return (vert1 - vert2).magnitude <= 0.0000000001;
+}
+
+// For now, only works in the upward direction
+static function FlattenVert(vert : Vector3) : Vector2 {
+	// More legit flatten might be B = A - (A.dor.N)N, but won't return Vector2
+	return new Vector2(vert.x, vert.z);
+}
+
+//  
+// [ 1,2, 3,4, 5,6, 7,8, 9,10]
 function FunnelAlgorithm (startPt : Vector3, goalPt : Vector3, agentUp : Vector3) : List.<Vector3> {
 	var start : Waypoint = GetClosestWaypointToPoint(startPt);
 	var goal : Waypoint = GetClosestWaypointToPoint(goalPt);
 	var waypointList : List.<Waypoint> = FindRoute (start, goal);
 	var edgeList : Vector3[,] = GetEdgesFromWaypointList(waypointList, agentUp);
 
+	var smoothedPath : List.<Vector3> = new List.<Vector3>();
+
+	var apexIndex : int = 0; var leftIndex : int = 0; var rightIndex : int = 0;
+
 	var portalApex : Vector3 = edgeList[0,0];
 	var portalLeft : Vector3 = edgeList[0,0];
-	var portalRight: Vector3 = edgeList[1,0];		//Check to see if correct!
+	var portalRight: Vector3 = edgeList[1,0]; //Check to see if correct!
 	
+	// Add Start Point
+	smoothedPath.Add(portalApex);
+
 	var edgeIdx : int;
 	var vertIdx : int;
 	var i : int;
+	var lft3 : Vector3; var rt3 : Vector3;
+	var lft2 : Vector3; var rt2 : Vector3;
 	for (edgeIdx = 1; edgeIdx < edgeList.Length/2; edgeIdx++) {
 		for (vertIdx = 0; vertIdx < 2; vertIdx++) {
 			i = edgeIdx + vertIdx;
-			//not finished	
+			lft3 = edgeList[i*2,0];
+			rt3 = edgeList[i*2+1,0];
+			lft2 = FlattenVert(lft3);
+			rt2 = FlattenVert(rt3);
+
+			// XXX: not finished
 		}
 	}
 	
-	
-	
-	
 	//TODO: not finished, implement actual funnel algorithm
+	return null;
 }
 
 //-------------------------------------------------------------------
