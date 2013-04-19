@@ -2,14 +2,14 @@
 
 var self : GameObject;
 var ammo : GameObject; //address
-var ammoCount : int;
+public var ammoCount : int;
 
-//function Update () {
+function Update () {
 
-	//if (Input.GetKeyDown ("e")){
-	//	if (ammo.enabled == true)
-					
-	//}
+	if (Input.GetKeyDown ("e")){
+		//if (ammo.enabled == true) //ammo is visible within range
+			ammoCount += 5;
+	}
 
-//}
+}
 

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 67a24af59fd5962459926c2e5f709ceb
+guid: 5af8ed8f67772284a8db5fd5dfaf414e
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
@@ -44,6 +44,7 @@ ModelImporter:
     2300020: Cylinder_002
     2300022: Cylinder_003
     2300024: Cylinder_004
+    2300026: //RootNode
     3300000: Cube
     3300002: Cube_001
     3300004: Cube_002
@@ -57,6 +58,7 @@ ModelImporter:
     3300020: Cylinder_002
     3300022: Cylinder_003
     3300024: Cylinder_004
+    3300026: //RootNode
     4300000: Cube_007
     4300002: Cube_006
     4300004: Cylinder_004

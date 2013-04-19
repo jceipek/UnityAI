@@ -1,13 +1,30 @@
 fileFormatVersion: 2
-guid: 9c47547231a00f3429213b790ff95caf
+guid: f0dc13d17637fd34380392843ffdc5b8
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: shipping_pallet
+    100000: Floor
+    100002: //RootNode
+    100004: Stair
+    100006: StairRamp
+    100008: Walls
+    400000: Floor
+    400002: //RootNode
+    400004: Stair
+    400006: StairRamp
+    400008: Walls
+    2300000: Floor
+    2300002: Stair
+    2300004: StairRamp
+    2300006: Walls
+    3300000: Floor
+    3300002: Stair
+    3300004: StairRamp
+    3300006: Walls
+    4300000: Floor
+    4300002: Stair
+    4300004: StairRamp
+    4300006: Walls
     7400000: Default Take
     9500000: //RootNode
   materials:
