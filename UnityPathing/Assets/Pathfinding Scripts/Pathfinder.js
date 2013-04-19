@@ -112,12 +112,12 @@ function FindRoute (start : Waypoint, goal : Waypoint) : List.<Waypoint> {
  	return Vector3.Cross(b-a,c-a).magnitude/2;
 }*/
 
-function TriArea2(a : Vector2, b : Vector2, c : Vector2) : float {
+function TriArea2(a : Vector3, b : Vector3, c : Vector3) : float {
 	var ax : float = b.x - a.x;
-	var ay : float = b.y - a.y;
+	var az : float = b.z - a.z;
 	var bx : float = c.x - a.x;
-	var by : float = c.y - a.y;
-	return bx*ay - ax*by;
+	var bz : float = c.z - a.z;
+	return bx*az - ax*bz;
 }
 
 // Returns an array of edges ordered according to a (right, left) scheme
@@ -208,32 +208,38 @@ function FunnelAlgorithm (startPt : Vector3, goalPt : Vector3, agentUp : Vector3
 
 	var apexIndex : int = 0; var leftIndex : int = 0; var rightIndex : int = 0;
 
-	var portalApex : Vector3 = edgeList[0,0];
-	var portalLeft : Vector3 = edgeList[0,0];
-	var portalRight: Vector3 = edgeList[1,0]; //Check to see if correct!
+	var portalApex : Vector3 = start.gameObject.transform.position; //set to current position
+	var portalRight: Vector3 = edgeList[0,0];
+	var portalLeft : Vector3 = edgeList[0,1];
 	
 	// Add Start Point
 	smoothedPath.Add(portalApex);
 
 	var edgeIdx : int;
 	var vertIdx : int;
-	var i : int;
-	var lft3 : Vector3; var rt3 : Vector3;
-	var lft2 : Vector3; var rt2 : Vector3;
-	for (edgeIdx = 1; edgeIdx < edgeList.Length/2; edgeIdx++) {
+	for (edgeIdx = 1; edgeIdx < edgeList.Length/2; edgeIdx++) {	
 		for (vertIdx = 0; vertIdx < 2; vertIdx++) {
-			i = edgeIdx + vertIdx;
-			lft3 = edgeList[i*2,0];
-			rt3 = edgeList[i*2+1,0];
-			lft2 = FlattenVert(lft3);
-			rt2 = FlattenVert(rt3);
-
-			// XXX: not finished
-		}
+			if (TriArea2(portalApex, portalLeft, portalRight) > 0) {
+				if (vertIdx > 0) {
+					portalLeft = edgeList[edgeIdx,1];
+				}
+				else {
+					portalRight = edgeList[edgeIdx,0];
+				}
+			}
+			else {
+				if (vertIdx > 0) {
+					portalApex = portalLeft;
+					smoothedPath.Add(portalLeft);
+				}
+				else {
+					portalApex = portalRight; 
+					smoothedPath.Add(portalRight);
+				}
+			}
+		}	
 	}
-	
-	//TODO: not finished, implement actual funnel algorithm
-	return null;
+	return smoothedPath;
 }
 
 //-------------------------------------------------------------------
@@ -270,5 +276,7 @@ function OnDrawGizmos () {
 		for (i = 0; i < tempVal.length/2; i++) {
 			Gizmos.DrawCube(tempVal[i,1], Vector3.one*0.3);
 		}
+		
+		//Debug for funnel
 	}
 }
