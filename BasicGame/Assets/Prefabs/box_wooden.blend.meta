@@ -1,35 +1,13 @@
 fileFormatVersion: 2
-guid: cfdafef628f4c1f4e81323e0d46b1f01
+guid: 835ab29fcfbc31247b58ea1c2286d266
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
-    100000: House1
-    100002: House1_002
-    100004: House1_004
-    100006: House3
-    100008: //RootNode
-    100010: Plane
-    400000: House1
-    400002: House1_002
-    400004: House1_004
-    400006: House3
-    400008: //RootNode
-    400010: Plane
-    2300000: House1
-    2300002: House1_002
-    2300004: House1_004
-    2300006: House3
-    2300008: Plane
-    3300000: House1
-    3300002: House1_002
-    3300004: House1_004
-    3300006: House3
-    3300008: Plane
-    4300000: Plane
-    4300002: House1
-    4300004: House3
-    4300006: House1_002
-    4300008: House1_004
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Cube
     7400000: Default Take
     9500000: //RootNode
   materials:
