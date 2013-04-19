@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0ee1dd545a573264eaf65035810d0a6c
+guid: d6ab7275e1773b54c921778fbc95abf6
 ModelImporter:
   serializedVersion: 15
   fileIDToRecycleName:
@@ -7,7 +7,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Circle
+    4300000: shipping_pallet
     7400000: Default Take
     9500000: //RootNode
   materials:

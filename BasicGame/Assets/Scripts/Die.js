@@ -1,5 +1,7 @@
 #pragma strict
 
+var target : Transform;
+
 function Fire () {
 		var hit : RaycastHit;
 		var source : Vector3 = gameObject.transform.position;
