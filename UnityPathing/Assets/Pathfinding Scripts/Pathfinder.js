@@ -112,12 +112,13 @@ function FindRoute (start : Waypoint, goal : Waypoint) : List.<Waypoint> {
  	return Vector3.Cross(b-a,c-a).magnitude/2;
 }*/
 
-function TriArea2(a : Vector2, b : Vector2, c : Vector2) : float {
+// Negative area2 is counterclockwise
+function TriArea2(a : Vector3, b : Vector3, c : Vector3) : float {
 	var ax : float = b.x - a.x;
-	var ay : float = b.y - a.y;
+	var az : float = b.z - a.z;
 	var bx : float = c.x - a.x;
-	var by : float = c.y - a.y;
-	return bx*ay - ax*by;
+	var bz : float = c.z - a.z;
+	return bx*az - ax*bz;
 }
 
 // Returns an array of edges ordered according to a (right, left) scheme
@@ -196,44 +197,146 @@ static function FlattenVert(vert : Vector3) : Vector2 {
 	return new Vector2(vert.x, vert.z);
 }
 
-//  
-// [ 1,2, 3,4, 5,6, 7,8, 9,10]
+// DIDN'T WORK
 function FunnelAlgorithm (startPt : Vector3, goalPt : Vector3, agentUp : Vector3) : List.<Vector3> {
+	// Note: Start and goal not handled properly ATM
+
 	var start : Waypoint = GetClosestWaypointToPoint(startPt);
 	var goal : Waypoint = GetClosestWaypointToPoint(goalPt);
 	var waypointList : List.<Waypoint> = FindRoute (start, goal);
 	var edgeList : Vector3[,] = GetEdgesFromWaypointList(waypointList, agentUp);
 
+	// The final path
 	var smoothedPath : List.<Vector3> = new List.<Vector3>();
 
 	var apexIndex : int = 0; var leftIndex : int = 0; var rightIndex : int = 0;
 
-	var portalApex : Vector3 = edgeList[0,0];
-	var portalLeft : Vector3 = edgeList[0,0];
-	var portalRight: Vector3 = edgeList[1,0]; //Check to see if correct!
+	var portalApex : Vector3 = start.gameObject.transform.position; //set to current position
+	var portalLeft : Vector3 = edgeList[1,1];
+	var portalRight: Vector3 = edgeList[1,0];
 	
 	// Add Start Point
-	smoothedPath.Add(portalApex);
+	//smoothedPath.Add(portalApex);
+	smoothedPath.Add(goal.gameObject.transform.position);
+
+	// Because of the way Unity JS handles arrays
+	var totalEdgeCount : int = edgeList.Length/2;
+
+	var escaper : int = 0;
 
 	var edgeIdx : int;
 	var vertIdx : int;
-	var i : int;
-	var lft3 : Vector3; var rt3 : Vector3;
-	var lft2 : Vector3; var rt2 : Vector3;
-	for (edgeIdx = 1; edgeIdx < edgeList.Length/2; edgeIdx++) {
-		for (vertIdx = 0; vertIdx < 2; vertIdx++) {
-			i = edgeIdx + vertIdx;
-			lft3 = edgeList[i*2,0];
-			rt3 = edgeList[i*2+1,0];
-			lft2 = FlattenVert(lft3);
-			rt2 = FlattenVert(rt3);
+	var triArea : float;
 
-			// XXX: not finished
+	var tentativeLeft : Vector3; var tentativeRight : Vector3;
+
+	//var prevTriArea : float = TriArea2(portalApex, portalLeft, portalRight);
+	Debug.Log("Funnel!");
+	for (edgeIdx = 1; edgeIdx < totalEdgeCount; edgeIdx++) {
+		tentativeLeft = edgeList[edgeIdx,1];
+		tentativeRight = edgeList[edgeIdx,0];
+
+		escaper++; // For Debugging (To stop crashes if we make an infinite loop)
+		if (escaper > 100) {
+			Debug.Log("OH NOES: 101 loops!");
+			for (var x : int = 0; x < smoothedPath.Count; x ++) {
+				//Debug.Log(smoothedPath[x]);	
+			}
+			break;
 		}
+
+
+		// Try to move right point to right vertex of next portal
+		triArea = TriArea2(portalApex, portalRight, tentativeRight);
+		// If inside Funnel:
+		if (triArea <= 0.0) {
+			if (EqualVertices(portalApex,portalRight) || TriArea2(portalApex, portalLeft, tentativeRight) > 0.0) {
+				//Debug.Log("In Right at "+edgeIdx);
+				// Narrow the funnel
+				portalRight = tentativeRight;
+				rightIndex = edgeIdx;
+			}
+			
+		} else {
+			Debug.Log("Add Left at "+edgeIdx);
+			smoothedPath.Add(portalLeft);
+
+			// Make current left the new apex.
+			portalApex = portalLeft;
+			apexIndex = leftIndex;
+
+			// Reset portal
+			portalLeft = portalApex;
+			portalRight = portalApex;
+			leftIndex = apexIndex;
+			rightIndex = apexIndex;
+
+			// Restart scan
+			edgeIdx = apexIndex; // Restart at portal where left point came from
+			continue;
+		}
+
+
+		// Try to move left point to left vertex of next portal
+		triArea = TriArea2(portalApex, portalLeft, tentativeLeft);
+		// If inside Funnel:
+		if (triArea >= 0.0) {
+			if (EqualVertices(portalApex,portalLeft) || TriArea2(portalApex, portalRight, tentativeLeft) < 0.0) {
+				//Debug.Log("In Left at "+edgeIdx);
+				// Narrow the funnel
+				portalLeft = tentativeLeft;
+				leftIndex = edgeIdx;
+			}
+		} else {
+			Debug.Log("Add Right at "+edgeIdx);
+			smoothedPath.Add(portalRight);
+
+			// Make current right the new apex.
+			portalApex = portalRight;
+			apexIndex = rightIndex;
+
+			// Reset portal
+			portalLeft = portalApex;
+			portalRight = portalApex;
+			leftIndex = apexIndex;
+			rightIndex = apexIndex;
+
+			// Restart scan			
+			edgeIdx = rightIndex; // Restart at portal where right point came from
+			continue;
+		}
+
+
+
+
+
+		/*for (vertIdx = 0; vertIdx < 2; vertIdx++) {
+			triArea = TriArea2(portalApex, portalLeft, portalRight);
+			if (triArea > 0 && triArea < prevTriArea) {
+				if (vertIdx > 0) {
+					portalLeft = edgeList[edgeIdx,1];
+				}
+				else {
+					portalRight = edgeList[edgeIdx,0];
+				}
+			}
+			else if (triArea <= 0) {
+				if (vertIdx == 0) {
+					portalApex = portalLeft;
+					smoothedPath.Add(portalLeft);
+				}
+				else {
+					portalApex = portalRight; 
+					smoothedPath.Add(portalRight);
+				}
+			}
+			prevTriArea = triArea;
+		}*/	
 	}
-	
-	//TODO: not finished, implement actual funnel algorithm
-	return null;
+
+	//smoothedPath.Add(goal.gameObject.transform.position);
+	smoothedPath.Add(start.gameObject.transform.position);
+	return smoothedPath;
 }
 
 //-------------------------------------------------------------------
@@ -253,16 +356,16 @@ function OnDrawGizmos () {
 			if (i == 0) {
 				Gizmos.color = Color.green;
 			}
-			Gizmos.DrawCube(idealWaypointPath[i].gameObject.transform.position + offset, Vector3.one*0.4);
+			Gizmos.DrawCube(idealWaypointPath[i].gameObject.transform.position + offset, Vector3.one*0.2);
 		}
 		if (idealWaypointPath.Count > 0) {
 			Gizmos.color = Color.red;
-			Gizmos.DrawCube(idealWaypointPath[i].gameObject.transform.position + offset, Vector3.one*0.4);	
+			Gizmos.DrawCube(idealWaypointPath[i].gameObject.transform.position + offset, Vector3.one*0.2);	
 		}
 
 		// Debug for edge orientation
 		var tempVal : Vector3[,] = GetEdgesFromWaypointList(idealWaypointPath, Vector3.up);
-		Gizmos.color = Color.white;
+		Gizmos.color = Color.white; 
 		for (i = 0; i < tempVal.length/2; i++) {
 			Gizmos.DrawCube(tempVal[i,0], Vector3.one*0.3);
 		}
@@ -270,5 +373,23 @@ function OnDrawGizmos () {
 		for (i = 0; i < tempVal.length/2; i++) {
 			Gizmos.DrawCube(tempVal[i,1], Vector3.one*0.3);
 		}
+		
+		//Debug for funnel
+		var tempStartPt : Vector3 = idealWaypointPath[0].gameObject.transform.position;
+		var tempEndPt : Vector3 = idealWaypointPath[idealWaypointPath.Count-1].gameObject.transform.position;
+		//var tempPath : List.<Vector3> = FunnelAlgorithm(tempStartPt, tempEndPt, Vector3.up);
+		var tempPath : List.<Vector3> = FunnelAlgorithm(tempEndPt, tempStartPt, Vector3.up);
+		
+		Gizmos.color = Color.magenta;
+		for (i = 0; i < tempPath.Count-1; i++) {
+			Gizmos.DrawWireCube(tempPath[i], Vector3.one*0.4);
+			Gizmos.DrawLine(tempPath[i]+Vector3.up*0.2, tempPath[i+1]+Vector3.up*0.2);
+		}
+		Gizmos.color = Color.green;
+		Gizmos.DrawWireSphere(tempStartPt, 0.3f);
+		Gizmos.color = Color.red;
+		Gizmos.DrawWireSphere(tempEndPt, 0.3f);
+		//Gizmos.DrawLine(idealWaypointPath[idealWaypointPath.Count-1].gameObject.transform.position)
+
 	}
 }
