@@ -289,8 +289,9 @@ function OnDrawGizmos () {
 		var tempEndPt : Vector3 = idealWaypointPath[idealWaypointPath.Count-1].gameObject.transform.position;
 		var tempPath : List.<Vector3> = FunnelAlgorithm(tempStartPt, tempEndPt, Vector3.up);
 		Gizmos.color = Color.magenta;
-		for (i = 0; i < tempPath.Count; i++) {
-			Gizmos.DrawCube(tempPath[i], Vector3.one*0.4);
+		for (i = 1; i < tempPath.Count; i++) {
+			Gizmos.DrawWireCube(tempPath[i-1], Vector3.one*0.4);
+			Gizmos.DrawLine(tempPath[i-1]+Vector3.one*0.2, tempPath[i]+Vector3.one*0.2);
 		}
 	}
 }
