@@ -291,7 +291,7 @@ function OnDrawGizmos () {
 		Gizmos.color = Color.magenta;
 		for (i = 1; i < tempPath.Count; i++) {
 			Gizmos.DrawWireCube(tempPath[i-1], Vector3.one*0.4);
-			Gizmos.DrawLine(tempPath[i-1]+Vector3.one*0.2, tempPath[i]+Vector3.one*0.2);
+			Gizmos.DrawLine(tempPath[i-1]+Vector3.up*0.2, tempPath[i]+Vector3.up*0.2);
 		}
 	}
 }
