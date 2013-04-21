@@ -1,6 +1,7 @@
 #pragma strict
 
 var hp : int;
+var self : GameObject;
 
 function Start () {
 
@@ -12,3 +13,11 @@ function ApplyDamage (damage : float) {
         print (damage);
         hp -= damage;
     }
+    
+function Update () {
+
+	if (hp == 0) {
+		Destroy(self);
+	}
+
+}
