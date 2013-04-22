@@ -103,7 +103,7 @@ function FindRoute (start : Waypoint, goal : Waypoint) : List.<Waypoint> {
 				path.Add(pointer);
 				pointer = pathTo[pointer];
 			}
-			Debug.Log("Found path in " + (Time.realtimeSinceStartup - startTime) + " seconds.");
+			//Debug.Log("Found path in " + (Time.realtimeSinceStartup - startTime) + " seconds.");
 			return path;
 		}
 		frontier.RemoveAt(0);
@@ -321,7 +321,7 @@ function FunnelAlgorithm (startPt : Vector3, goalPt : Vector3, agentUp : Vector3
 // Debug Visualization
 //-------------------------------------------------------------------
 
-function OnDrawGizmos () {
+function OnDrawGizmosSelected () {
 	if (idealWaypointPath != null) {
 		var offset : Vector3 = new Vector3(0,3,0);
 		var i : int;
