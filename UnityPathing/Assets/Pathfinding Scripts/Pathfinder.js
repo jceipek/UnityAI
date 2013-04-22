@@ -43,8 +43,31 @@ function GetClosestWaypointToPoint (point : Vector3) : Waypoint {
             closest = waypoint as Waypoint;
         }
     }        
-
     return closest;
+}
+
+function GetTriangleWaypointOfPoint (point : Vector3) : Waypoint {
+
+	var navGeo : NavmeshGeometry;
+	var verts : Vector3[];
+	var waypoints : Component[];
+	waypoints = gameObject.GetComponentsInChildren (Waypoint);
+	for (var waypoint : Component in waypoints) {
+		navGeo = waypoint.gameObject.GetComponent(NavmeshGeometry) as NavmeshGeometry;
+		verts = navGeo.getTransformedVerts();
+		Debug.Log("triangle");
+		Debug.Log(Mathf.Sign(TriArea2(verts[0], verts[1], point)));
+		Debug.Log(Mathf.Sign(TriArea2(verts[1], verts[2], point)));
+		Debug.Log(Mathf.Sign(TriArea2(verts[2], verts[0], point)));
+		if (Mathf.Sign(TriArea2(verts[0], verts[1], point)) == 
+		    Mathf.Sign(TriArea2(verts[1], verts[2], point)) == 
+		    Mathf.Sign(TriArea2(verts[2], verts[0], point))) {
+			if (waypoint.gameObject.transform.position.y >= point.y) {
+				return waypoint as Waypoint;
+			}
+		}
+	}
+	return null;
 }
 
 //-------------------------------------------------------------------
@@ -202,8 +225,8 @@ static function FlattenVert(vert : Vector3) : Vector2 {
 function FunnelAlgorithm (startPt : Vector3, goalPt : Vector3, agentUp : Vector3) : List.<Vector3> {
 	// Note: Start and goal not handled properly ATM
 
-	var start : Waypoint = GetClosestWaypointToPoint(startPt);
-	var goal : Waypoint = GetClosestWaypointToPoint(goalPt);
+	var start : Waypoint = GetTriangleWaypointOfPoint(startPt);
+	var goal : Waypoint = GetTriangleWaypointOfPoint(goalPt);
 	var waypointList : List.<Waypoint> = FindRoute (start, goal);	//Returns list from last waypt to first
 	var edgeList : Vector3[,] = GetEdgesFromWaypointList(waypointList, agentUp);
 
@@ -218,12 +241,10 @@ function FunnelAlgorithm (startPt : Vector3, goalPt : Vector3, agentUp : Vector3
 	
 	// Add Start Point
 	//smoothedPath.Add(portalApex);
-	smoothedPath.Add(goal.gameObject.transform.position);
+	smoothedPath.Add(goalPt);
 
 	// Because of the way Unity JS handles arrays
 	var totalEdgeCount : int = edgeList.Length/2;
-
-	var escaper : int = 0;
 
 	var edgeIdx : int;
 	var vertIdx : int;
@@ -236,15 +257,6 @@ function FunnelAlgorithm (startPt : Vector3, goalPt : Vector3, agentUp : Vector3
 	for (edgeIdx = 1; edgeIdx < totalEdgeCount; edgeIdx++) {
 		tentativeLeft = edgeList[edgeIdx,1];
 		tentativeRight = edgeList[edgeIdx,0];
-
-		escaper++; // For Debugging (To stop crashes if we make an infinite loop)
-		if (escaper > 100) {
-			Debug.Log("OH NOES: 101 loops!");
-			for (var x : int = 0; x < smoothedPath.Count; x ++) {
-				//Debug.Log(smoothedPath[x]);	
-			}
-			break;
-		}
 
 
 		// Try to move left point to left vertex of next portal
@@ -306,39 +318,9 @@ function FunnelAlgorithm (startPt : Vector3, goalPt : Vector3, agentUp : Vector3
 			edgeIdx = apexIndex; // Restart at portal where left point came from
 			continue;
 		}
-
-
-
-
-
-
-		/*for (vertIdx = 0; vertIdx < 2; vertIdx++) {
-			triArea = TriArea2(portalApex, portalLeft, portalRight);
-			if (triArea > 0 && triArea < prevTriArea) {
-				if (vertIdx > 0) {
-					portalLeft = edgeList[edgeIdx,1];
-				}
-				else {
-					portalRight = edgeList[edgeIdx,0];
-				}
-			}
-			else if (triArea <= 0) {
-				if (vertIdx == 0) {
-					portalApex = portalLeft;
-					smoothedPath.Add(portalLeft);
-				}
-				else {
-					portalApex = portalRight; 
-					smoothedPath.Add(portalRight);
-				}
-			}
-			prevTriArea = triArea;
-		}*/	
-	}
-
-	//smoothedPath.Add(goal.gameObject.transform.position);
-	smoothedPath.Add(start.gameObject.transform.position);
+	smoothedPath.Add(startPt);
 	return smoothedPath;
+	}
 }
 
 //-------------------------------------------------------------------
@@ -377,8 +359,11 @@ function OnDrawGizmos () {
 		}
 		
 		//Debug for funnel
-		var tempStartPt : Vector3 = idealWaypointPath[0].gameObject.transform.position;
-		var tempEndPt : Vector3 = idealWaypointPath[idealWaypointPath.Count-1].gameObject.transform.position;
+		var tempStartWayPt : Waypoint = GetClosestWaypointToPoint(idealWaypointPath[0].gameObject.transform.position);
+		var tempEndWayPt : Waypoint = GetClosestWaypointToPoint(idealWaypointPath[idealWaypointPath.Count-1].gameObject.transform.position);
+		var tempStartPt : Vector3 = tempStartWayPt.gameObject.transform.position;
+		var tempEndPt : Vector3 = tempEndWayPt.gameObject.transform.position;
+		
 		//var tempPath : List.<Vector3> = FunnelAlgorithm(tempStartPt, tempEndPt, Vector3.up);
 		var tempPath : List.<Vector3> = FunnelAlgorithm(tempEndPt, tempStartPt, Vector3.up);
 		
