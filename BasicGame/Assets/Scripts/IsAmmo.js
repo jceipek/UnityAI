@@ -1,9 +1,3 @@
 #pragma strict
 
-function Start () {
-
-}
-
-function Update () {
-
-}
+collider.isTrigger = true;
