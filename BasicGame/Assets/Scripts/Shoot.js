@@ -12,6 +12,11 @@ function Update () {
 		die.Fire();
 		
 		utilityKey.ammoCount -= 1;
+		
+		if (!audioPlaying){
+			audio.play;
+		}
+		
 	}
 	if (Input.GetButtonDown ("Fire2") ){
 		
