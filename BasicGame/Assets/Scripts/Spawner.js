@@ -1,5 +1,7 @@
 #pragma strict
 
+var enemy : GameObject;
+
 //enemy settings
 public var numEnemy : int = 0;
 public var totalEnemy : int = 10;
@@ -14,7 +16,9 @@ public enum SpawnTypes {
 
 }
 
-private var SpawnId : int;
+var spawnType : SpawnTypes = SpawnTypes.Normal; 
+
+private var SpawnID : int;
 
 //Spawn States
 private var waveSpawn : boolean = false;
@@ -26,7 +30,7 @@ public var totalWaves : int = 5;
 private var numWaves : int = 0;
 
 function Start () {
-	SpawnID = Range(1,500);
+	SpawnID = Random.Range(1,500);
 }
 
 function Update() {
@@ -83,8 +87,8 @@ function Update() {
 }
 
 function spawnEnemy(){
-	if (Enemy != null){
-		var Enemy : GameObject = Instantiate(Enemy, gameObject.transform.position, Quaternion.identity);
+	if (enemy != null){
+		Instantiate(enemy, gameObject.transform.position, Quaternion.identity);
 	}
 	else{
 	Debug.Log("No Enemy Prefab Loaded");
@@ -93,7 +97,7 @@ function spawnEnemy(){
 	spawnedEnemy++;
 }
 
-function killEnemy(sId : int){
+function killEnemy(sID : int){
 	if(SpawnID == sID){
 		numEnemy--;
 	}
