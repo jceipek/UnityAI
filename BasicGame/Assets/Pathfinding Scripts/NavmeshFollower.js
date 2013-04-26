@@ -28,7 +28,7 @@ function Start () {
 	var aiSystemContainer : GameObject;
 	aiSystemContainer = GameObject.FindWithTag ("AI System");
 	aiSystem = aiSystemContainer.GetComponent(Pathfinder);
-
+	endTransform = GameObject.FindWithTag("Player").transform;
 	if (endTransform != null) {
 		RecomputePath();
 	}

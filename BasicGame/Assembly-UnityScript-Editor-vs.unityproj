@@ -46,7 +46,6 @@
   <ItemGroup>
      <Compile Include="Assets\Editor\NavMeshWindow.js" />
      <Compile Include="Assets\Editor\PathfindingEditor.js" />
-     <None Include="Assets\Prefabs\BLENDSWAP_LICENSE.txt" />
  <Reference Include="Assembly-UnityScript-firstpass">
  <HintPath>Library\ScriptAssemblies\Assembly-UnityScript-firstpass.dll</HintPath>
  </Reference>

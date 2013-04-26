@@ -1,7 +1,5 @@
 #pragma strict
 
-var enemy : GameObject;
-
 //enemy settings
 public var numEnemy : int = 0;
 public var totalEnemy : int = 10;
@@ -31,7 +29,6 @@ private var numWaves : int = 0;
 
 function Start () {
 	SpawnID = Random.Range(1,500);
-	Debug.Log("RUNNING");
 }
 
 function Update() {
@@ -88,21 +85,17 @@ function Update() {
 }
 
 function spawnEnemy(){
-	if (enemy != null){
-		var pos : Vector3 = Vector3(5,1.3,1.5);
-		Instantiate(enemy, pos, Quaternion.identity);
-	}
-	else{
-	Debug.Log("No Enemy Prefab Loaded");
-	}
+	var pos : Vector3 = Vector3(5,1.3,1.5);
+	var enemy : GameObject = Instantiate(Resources.Load("CaveWorm_anim")) as GameObject;
+	enemy.transform.position = pos;
+		//Instantiate(enemy, pos, Quaternion.identity);
+	Debug.Log("spawned");
 	numEnemy++;
 	spawnedEnemy++;
 }
 
-function killEnemy(sID : int){
-	if(SpawnID == sID){
-		numEnemy--;
-	}
+function killEnemy(){
+	numEnemy--;
 }
 
 function enableSpawner(sID : int){

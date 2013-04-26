@@ -2,11 +2,11 @@
 
 var source : Vector3;
 var dir : Vector3; 
-		
+var tip : Transform;
 
 function Fire () {
 		var hit : RaycastHit;
-		source = gameObject.transform.position;
+		source = tip.position;
 		dir = transform.right;
 		if (Physics.Raycast (source, dir, hit)) {
 				//send message to hit thing to disapear
@@ -22,3 +22,4 @@ function OnDrawGizmos () {
 	//Gizmos.DrawRay(source, dir);
 	Gizmos.DrawLine(source,source+dir*20);
 }
+

@@ -3,7 +3,7 @@
 var hp : int;
 var arena : GameObject;
 function Start () {
-
+	arena = GameObject.FindWithTag ("Respawn");
 	hp = 3;
 
 }
@@ -17,7 +17,7 @@ function Update () {
 
 	if (hp == 0) {
 		Destroy(gameObject);
-		arena.SendMessage("killEnemy");
+		arena.SendMessage("killEnemy",SendMessageOptions.DontRequireReceiver);
 	}
 
 }
