@@ -89,7 +89,8 @@ function Update() {
 
 function spawnEnemy(){
 	if (enemy != null){
-		Instantiate(enemy, gameObject.transform.position, Quaternion.identity);
+		var pos : Vector3 = Vector3(5,1.3,1.5);
+		Instantiate(enemy, pos, Quaternion.identity);
 	}
 	else{
 	Debug.Log("No Enemy Prefab Loaded");
