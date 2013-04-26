@@ -13,8 +13,8 @@ function Update () {
 		
 		utilityKey.ammoCount -= 1;
 		
-		if (!audioPlaying){
-			audio.play;
+		if (!audio.isPlaying){
+			audio.Play();
 		}
 		
 	}
