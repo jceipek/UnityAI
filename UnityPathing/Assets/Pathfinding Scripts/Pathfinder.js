@@ -103,7 +103,7 @@ function FindRoute (start : Waypoint, goal : Waypoint) : List.<Waypoint> {
 				path.Add(pointer);
 				pointer = pathTo[pointer];
 			}
-			Debug.Log("Found path in " + (Time.realtimeSinceStartup - startTime) + " seconds.");
+			//Debug.Log("Found path in " + (Time.realtimeSinceStartup - startTime) + " seconds.");
 			return path;
 		}
 		frontier.RemoveAt(0);
@@ -256,8 +256,8 @@ function FunnelAlgorithm (startPt : Vector3, goalPt : Vector3, agentUp : Vector3
 		// Try to move right point to right vertex of next portal
 		triArea = TriArea2(portalApex, portalRight, tentativeRight);
 		// If inside Funnel:
-		if (triArea <= 0.0) {
-			if (EqualVertices(portalApex,portalRight) || TriArea2(portalApex, portalLeft, tentativeRight) > 0.0) {
+		if (triArea >= 0.0) {
+			if (EqualVertices(portalApex,portalRight) || TriArea2(portalApex, portalLeft, tentativeRight) < 0.0) {
 				//Debug.Log("In Right at "+edgeIdx);
 				// Narrow the funnel
 				portalRight = tentativeRight;
@@ -286,8 +286,8 @@ function FunnelAlgorithm (startPt : Vector3, goalPt : Vector3, agentUp : Vector3
 		// Try to move left point to left vertex of next portal
 		triArea = TriArea2(portalApex, portalLeft, tentativeLeft);
 		// If inside Funnel:
-		if (triArea >= 0.0) {
-			if (EqualVertices(portalApex,portalLeft) || TriArea2(portalApex, portalRight, tentativeLeft) < 0.0) {
+		if (triArea <= 0.0) {
+			if (EqualVertices(portalApex,portalLeft) || TriArea2(portalApex, portalRight, tentativeLeft) > 0.0) {
 				//Debug.Log("In Left at "+edgeIdx);
 				// Narrow the funnel
 				portalLeft = tentativeLeft;
@@ -321,7 +321,7 @@ function FunnelAlgorithm (startPt : Vector3, goalPt : Vector3, agentUp : Vector3
 // Debug Visualization
 //-------------------------------------------------------------------
 
-function OnDrawGizmos () {
+function OnDrawGizmosSelected () {
 	if (idealWaypointPath != null) {
 		var offset : Vector3 = new Vector3(0,3,0);
 		var i : int;
