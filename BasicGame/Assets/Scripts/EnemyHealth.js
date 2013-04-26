@@ -1,6 +1,7 @@
 #pragma strict
 
 var hp : int;
+var arena : GameObject;
 function Start () {
 
 	hp = 3;
@@ -16,6 +17,7 @@ function Update () {
 
 	if (hp == 0) {
 		Destroy(gameObject);
+		arena.SendMessage("killEnemy");
 	}
 
 }

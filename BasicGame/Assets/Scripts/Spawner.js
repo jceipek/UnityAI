@@ -31,6 +31,7 @@ private var numWaves : int = 0;
 
 function Start () {
 	SpawnID = Random.Range(1,500);
+	Debug.Log("RUNNING");
 }
 
 function Update() {

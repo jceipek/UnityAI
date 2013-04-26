@@ -37,9 +37,9 @@ function Start () {
 function RecomputePath () {
 	endPoint = endTransform.position;
  	currPoint = transform.position;
- 	Debug.Log(endPoint);
- 	Debug.Log(currPoint);
- 	Debug.Log("Finding Points...");
+ 	//Debug.Log(endPoint);
+ 	//Debug.Log(currPoint);
+ 	//Debug.Log("Finding Points...");
 	pathPoints = aiSystem.FunnelAlgorithm(currPoint, endPoint, gameObject.transform.up);	
 }
 
@@ -64,14 +64,14 @@ function Update () {
 			prevPoint = currPoint;
 			currPoint = pathPoints[pathPoints.Count-1];
 			pathPoints.RemoveAt(pathPoints.Count-1);
-			Debug.Log("Removed Pt");
+			//Debug.Log("Removed Pt");
 		}
 	} else {
 		if ((predictedPt - projectedPt).magnitude > followRadius) {
 			rotation = Quaternion.LookRotation(currProjectionVector-currLocVector);
 	    	transform.rotation = Quaternion.Lerp (transform.rotation, rotation, Time.deltaTime * turnSpeed);
 		}
-		Debug.Log("Move!");
+		//Debug.Log("Move!");
 		controller.Move(transform.forward * moveSpeed * Time.deltaTime);
 	}
 
