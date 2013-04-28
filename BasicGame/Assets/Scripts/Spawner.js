@@ -2,7 +2,7 @@
 
 //enemy settings
 public var numEnemy : int = 0;
-public var totalEnemy : int = 10;
+public var totalEnemy : int;
 public var spawnedEnemy : int = 0;
 
 public enum SpawnTypes {
@@ -27,11 +27,15 @@ private var timeTillWave : float = 0.0f;
 public var totalWaves : int = 5;
 private var numWaves : int = 0;
 
+var aiDirector : AIDirector;
+
 function Start () {
 	SpawnID = Random.Range(1,500);
 }
 
 function Update() {
+
+	totalEnemy = aiDirector.totalEnemy;
 
 	if(Spawn){
 		if (spawnType == SpawnTypes.Normal){
@@ -94,7 +98,6 @@ function spawnEnemy(){
 		enemy.transform.position = posArray[index];
 	}
 		//Instantiate(enemy, pos, Quaternion.identity);
-	Debug.Log("spawned");
 	numEnemy++;
 	spawnedEnemy++;
 }

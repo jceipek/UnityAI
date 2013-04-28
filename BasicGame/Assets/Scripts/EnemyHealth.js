@@ -2,9 +2,12 @@
 
 var hp : int;
 var arena : GameObject;
+var aiDirector : AIDirector;
+
 function Start () {
 	arena = GameObject.FindWithTag ("Respawn");
-	hp = 3;
+	aiDirector = arena.GetComponent(AIDirector);
+	hp = aiDirector.enemyHP;
 
 }
 
