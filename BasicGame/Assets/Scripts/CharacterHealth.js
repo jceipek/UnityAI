@@ -4,10 +4,13 @@ var hp : int;
 
 function Start () {
 
-hp = 100;
+hp = 500;
 
 }
 
-function OnCollisionEnter(other : Collision){
+function OnCollisionEnter(collision : Collision){
+	if (collision.gameObject.tag == "Enemy"){
+	Debug.Log("hit");
 	hp--;
+	}
 }
