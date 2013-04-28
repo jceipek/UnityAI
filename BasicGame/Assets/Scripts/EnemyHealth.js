@@ -12,7 +12,6 @@ function Start () {
 }
 
 function ApplyDamage (damage : float) {
-        print (damage);
         hp -= damage;
     }
     

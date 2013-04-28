@@ -4,7 +4,7 @@ var hp : int;
 
 function Start () {
 
-hp = 500;
+hp = 100;
 
 }
 
@@ -19,5 +19,5 @@ function OnCollisionEnter(collision : Collision){
 function OnGUI()
 {
 	GUI.color = Color.red;
-    GUI.HorizontalScrollbar(Rect (0,0,200,20), 0, hp, 0, 500);
+    GUI.HorizontalScrollbar(Rect (0,0,200,20), 0, hp, 0, 100);
 }

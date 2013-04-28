@@ -53,16 +53,18 @@ function Update(){
 
 }
 
+//other factor to include, maybe add a timer? For every minute key is not found, increase difficulty?
+
 
 function determineDifficulty(ammo : int, hp : int){
 
-	if (hp <= 30 || ammo <= 30){
+	if (hp <= 30 && ammo <= 30){
 		difficulty = Difficulties.Easy;
 	}
-	else if (hp <= 50 || ammo <= 50){
+	else if (hp <= 50 && ammo <= 50){
 		difficulty = Difficulties.Medium;
 	}
-	else if (hp <= 75 || ammo <100){
+	else if (hp <= 75 && ammo <100){
 		difficulty = Difficulties.Hard;
 	}
 	else if (hp > 90 && ammo >200){
