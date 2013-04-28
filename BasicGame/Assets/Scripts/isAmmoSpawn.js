@@ -8,7 +8,7 @@ collider.isTrigger = true;
 
 
 function OnTriggerStay(other : Collider){
-	Debug.Log("stay");
+	//Debug.Log("stay");
     gameObject.tag = "Untagged";
 
 }

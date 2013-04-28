@@ -13,6 +13,7 @@ var utilityKey : UtilityKey;
 public var difficulty : Difficulties = Difficulties.Easy; 
 var enemyHP : int;
 var totalEnemy : int;
+var ammoTimer : float;
 
 function Update(){
 
@@ -25,28 +26,28 @@ function Update(){
 	
 	enemyHP = 1;
 	totalEnemy = 3;
-	//freqency of ammo drops = 1 per 30s;
+	ammoTimer = 30.0f;
 	
 	}
 	else if(difficulty == Difficulties.Medium){
 	
 	enemyHP = 3;
 	totalEnemy = 5;
-	//freqency of ammo drops = 1 per 45s;
+	ammoTimer = 45.0f;
 	
 	}
 	else if(difficulty == Difficulties.Hard){
 	
 	enemyHP = 5;
 	totalEnemy = 10;
-	//freqency of ammo drops = 1 per 60s;
+	ammoTimer = 60.0f;
 	
 	}
 	else if(difficulty == Difficulties.DanteMustDie){
 	
 	enemyHP = 5;
 	totalEnemy = 15;
-	//freqency of ammo drops = 1 per 120s;
+	ammoTimer = 120.0f;
 	
 	}
 

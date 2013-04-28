@@ -4,7 +4,7 @@ var hp : int;
 
 function Start () {
 
-hp = 100;
+hp = 10;
 
 }
 

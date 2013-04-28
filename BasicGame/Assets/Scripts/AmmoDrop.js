@@ -1,12 +1,31 @@
 #pragma strict
 
+var aiDirector : AIDirector;
+var interval : float;
+var timer : float;
+
+function Start(){
+	//timer = Time.time + interval;
+}
+
+function Update(){
+
+	interval = aiDirector.ammoTimer;
+
+	if(Time.time >= timer){
+		Debug.Log("Spawned Ammo");
+    	spawnAmmo();
+    	timer = Time.time + interval;
+  }
+
+}
 
 
 function spawnAmmo(){
 
-	var posArray = new Array(Vector3(-25.77965,1.3,11.06246),Vector3(-4.533064,1.3,2.952221),Vector3(19.22656,1.3,9.120594));
+	var spawnPoints = GameObject.FindGameObjectsWithTag ("ammoSpawnPoint");
 	var ammo : GameObject = Instantiate(Resources.Load("box_wooden")) as GameObject;
-	var index : int = Random.Range(1,4) -1;
-	ammo.transform.position = posArray[index];
+	var index : int = Random.Range(1,spawnPoints.length + 1) -1;
+	ammo.transform.position = spawnPoints[index].transform.position;
 
 }
