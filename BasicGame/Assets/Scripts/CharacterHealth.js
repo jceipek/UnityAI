@@ -8,13 +8,6 @@ hp = 10;
 
 }
 
-function OnCollisionEnter(collision : Collision){
-	Debug.Log("test1");
-	if (collision.gameObject.tag == "Enemy"){
-	Debug.Log("hit");
-	hp--;
-	}
-}
 
 function OnGUI()
 {

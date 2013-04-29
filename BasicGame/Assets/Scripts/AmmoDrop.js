@@ -2,30 +2,22 @@
 
 var aiDirector : AIDirector;
 var interval : float;
-var timer : float;
 
 function Start(){
-	//timer = Time.time + interval;
+	interval = aiDirector.ammoTimer;
+	InvokeRepeating("spawnAmmo", 0, 3.0);
 }
 
 function Update(){
-
 	interval = aiDirector.ammoTimer;
-
-	if(Time.time >= timer){
-		Debug.Log("Spawned Ammo");
-    	spawnAmmo();
-    	timer = Time.time + interval;
-  }
-
 }
 
-
 function spawnAmmo(){
-
 	var spawnPoints = GameObject.FindGameObjectsWithTag ("ammoSpawnPoint");
-	var ammo : GameObject = Instantiate(Resources.Load("box_wooden")) as GameObject;
-	var index : int = Random.Range(1,spawnPoints.length + 1) -1;
-	ammo.transform.position = spawnPoints[index].transform.position;
-
+	
+	if (spawnPoints && spawnPoints.length > 0){
+		var ammo : GameObject = Instantiate(Resources.Load("box_wooden")) as GameObject;
+		var index : int = Random.Range(0,spawnPoints.length-1);
+		ammo.transform.position = spawnPoints[index].transform.position;
+	}
 }

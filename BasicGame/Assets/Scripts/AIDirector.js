@@ -26,28 +26,28 @@ function Update(){
 	
 	enemyHP = 1;
 	totalEnemy = 3;
-	ammoTimer = 30.0f;
+	ammoTimer = 3.0;
 	
 	}
 	else if(difficulty == Difficulties.Medium){
 	
 	enemyHP = 3;
 	totalEnemy = 5;
-	ammoTimer = 45.0f;
+	ammoTimer = 45.0;
 	
 	}
 	else if(difficulty == Difficulties.Hard){
 	
 	enemyHP = 5;
 	totalEnemy = 10;
-	ammoTimer = 60.0f;
+	ammoTimer = 60.0;
 	
 	}
 	else if(difficulty == Difficulties.DanteMustDie){
 	
 	enemyHP = 5;
 	totalEnemy = 15;
-	ammoTimer = 120.0f;
+	ammoTimer = 120.0;
 	
 	}
 

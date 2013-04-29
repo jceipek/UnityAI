@@ -221,6 +221,11 @@ function FunnelAlgorithm (startPt : Vector3, goalPt : Vector3, agentUp : Vector3
 
 	var start : Waypoint = GetTriangleWaypointOfPoint(startPt);
 	var goal : Waypoint = GetTriangleWaypointOfPoint(goalPt);
+	
+	//if (!start || !goal) {
+	//	return new List.<Vector3>();
+	//}
+	
 	var waypointList : List.<Waypoint> = FindRoute (start, goal);
 	var edgeList : Vector3[,] = GetEdgesFromWaypointList(waypointList, agentUp);
 
