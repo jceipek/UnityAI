@@ -8,7 +8,7 @@ function Update () {
 
 }*/
 
-var characterHealth : CharacterHealth = null;
+private var characterHealth : CharacterHealth = null;
 
 function Awake(){
 	var thePlayer = GameObject.FindWithTag("Player");
