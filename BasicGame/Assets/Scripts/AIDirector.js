@@ -26,7 +26,7 @@ function Update(){
 	
 	enemyHP = 1;
 	totalEnemy = 3;
-	ammoTimer = 3.0;
+	ammoTimer = 30.0;
 	
 	}
 	else if(difficulty == Difficulties.Medium){
