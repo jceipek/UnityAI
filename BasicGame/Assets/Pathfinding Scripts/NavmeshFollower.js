@@ -23,6 +23,9 @@ private var controller : CharacterController;
 private var predictedPt : Vector3;
 private var projectedPt : Vector3;
 
+public var recomputeStepTime : float = 0.0;
+private var timeTillRecompute : float = 0.0;
+
 function Start () {
 	controller = GetComponent(CharacterController);
 	var aiSystemContainer : GameObject;
@@ -35,26 +38,36 @@ function Start () {
 }
 
 function RecomputePath () {
-	endPoint = endTransform.position;
- 	currPoint = transform.position;
+	
  	//Debug.Log(endPoint);
  	//Debug.Log(currPoint);
  	//Debug.Log("Finding Points...");
-	pathPoints = aiSystem.FunnelAlgorithm(currPoint, endPoint, gameObject.transform.up);	
+ 	if (!(aiSystem.GetTriangleWaypointOfPoint(transform.position) == null) &&
+ 		!(aiSystem.GetTriangleWaypointOfPoint(endTransform.position) == null)) {
+ 		endPoint = endTransform.position;
+ 		currPoint = transform.position;
+ 		
+ 		pathPoints = aiSystem.FunnelAlgorithm(currPoint, endPoint, gameObject.transform.up);
+ 		timeTillRecompute = recomputeStepTime;
+ 	}
+	
 }
 
 function Update () {
 	//var o : Vector3 = new Vector3(currPoint.x, 0, currPoint.z);
 
 	var rotation : Quaternion;
+	var dTime : float = Time.deltaTime;
+	//Uses vector and speed to predict next position of char
 	predictedPt = transform.position + transform.forward * moveSpeed * followRadiusSpeedFactor;
+	//Gets closest point on line to where char is going to be
 	projectedPt = ClosestPointOnLineToPoint(prevPoint, currPoint, predictedPt);
 	
 	var currGoalVector : Vector3 = new Vector3(currPoint.x, 0, currPoint.z);
 	var currProjectionVector : Vector3 = new Vector3(projectedPt.x, 0, projectedPt.z);
 	var currLocVector : Vector3 = new Vector3(transform.position.x, 0, transform.position.z);
-	
-	if (endPoint != endTransform.position) {
+
+	if (endPoint != endTransform.position && timeTillRecompute <= 0.0) {
 		RecomputePath();
 	}
 
@@ -69,13 +82,16 @@ function Update () {
 	} else {
 		if ((predictedPt - projectedPt).magnitude > followRadius) {
 			rotation = Quaternion.LookRotation(currProjectionVector-currLocVector);
-	    	transform.rotation = Quaternion.Lerp (transform.rotation, rotation, Time.deltaTime * turnSpeed);
+	    	transform.rotation = Quaternion.Lerp (transform.rotation, rotation, dTime * turnSpeed);
 		}
-		//Debug.Log("Move!");
-		controller.Move(transform.forward * moveSpeed * Time.deltaTime);
+		Debug.Log("Move!");
+		controller.Move(transform.forward * moveSpeed * dTime);
 	}
 
+	timeTillRecompute -= Time.deltaTime;
+
 }
+
 
 // http://forum.unity3d.com/threads/8114-math-problem?p=59715
 function ClosestPointOnLineToPoint(vA : Vector3, vB : Vector3, vPoint : Vector3) {
