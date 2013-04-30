@@ -46,7 +46,6 @@
   <ItemGroup>
      <Compile Include="Assets\Editor\NavMeshWindow.js" />
      <Compile Include="Assets\Editor\PathfindingEditor.js" />
-     <None Include="Assets\Prefabs\BLENDSWAP_LICENSE.txt" />
  <Reference Include="UnityEditor.Graphs">
  <HintPath>C:\Program Files (x86)\Unity\Editor\Data\Managed\UnityEditor.Graphs.dll</HintPath>
  </Reference>

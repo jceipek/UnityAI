@@ -1,14 +1,17 @@
 #pragma strict
 
 var hp : int;
-function Start () {
+var arena : GameObject;
+var aiDirector : AIDirector;
 
-	hp = 3;
+function Start () {
+	arena = GameObject.FindWithTag ("Respawn");
+	aiDirector = arena.GetComponent(AIDirector);
+	hp = aiDirector.enemyHP;
 
 }
 
 function ApplyDamage (damage : float) {
-        print (damage);
         hp -= damage;
     }
     
@@ -16,6 +19,7 @@ function Update () {
 
 	if (hp == 0) {
 		Destroy(gameObject);
+		arena.SendMessage("killEnemy",SendMessageOptions.DontRequireReceiver);
 	}
 
 }

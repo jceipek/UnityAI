@@ -1,10 +1,8 @@
 #pragma strict
 
-var enemy : GameObject;
-
 //enemy settings
 public var numEnemy : int = 0;
-public var totalEnemy : int = 10;
+public var totalEnemy : int;
 public var spawnedEnemy : int = 0;
 
 public enum SpawnTypes {
@@ -29,11 +27,15 @@ private var timeTillWave : float = 0.0f;
 public var totalWaves : int = 5;
 private var numWaves : int = 0;
 
+var aiDirector : AIDirector;
+
 function Start () {
 	SpawnID = Random.Range(1,500);
 }
 
 function Update() {
+
+	totalEnemy = aiDirector.totalEnemy;
 
 	if(Spawn){
 		if (spawnType == SpawnTypes.Normal){
@@ -87,20 +89,30 @@ function Update() {
 }
 
 function spawnEnemy(){
-	if (enemy != null){
-		Instantiate(enemy, gameObject.transform.position, Quaternion.identity);
+	//var pos : Vector3 = Vector3(5,1.3,1.5);
+	var posArray = new Array(Vector3(19.25551,1.3,17.81644),Vector3(-25.39346,1.3,-15.63889),Vector3(14.38626,1.3,-16.83782));
+	var enemy : GameObject = Instantiate(Resources.Load("CaveWorm_anim")) as GameObject;
+	var index : int = Random.Range(1,4) -1;
+	var hitColliders = Physics.OverlapSphere(posArray[index], 1.0f);
+	if (hitColliders != 1){ 
+		enemy.transform.position = posArray[index];
 	}
-	else{
-	Debug.Log("No Enemy Prefab Loaded");
-	}
+		//Instantiate(enemy, pos, Quaternion.identity);
 	numEnemy++;
 	spawnedEnemy++;
 }
 
-function killEnemy(sID : int){
-	if(SpawnID == sID){
-		numEnemy--;
-	}
+function OnDrawGizmos(){
+	var posArray = new Array(Vector3(19.25551,1.3,17.81644),Vector3(-27.39346,1.3,-15.63889),Vector3(14.38626,1.3,-17.83782));
+	Gizmos.color = Color.green;
+	Gizmos.DrawSphere(Vector3(19.25551,1.3,17.81644), 1);
+	Gizmos.DrawSphere(Vector3(-25.39346,1.3,-15.63889), 1);
+	Gizmos.DrawSphere(Vector3(14.38626,1.3,-16.83782), 1);
+
+}
+    
+function killEnemy(){
+	numEnemy--;
 }
 
 function enableSpawner(sID : int){

@@ -4,7 +4,7 @@ var utilityKey : UtilityKey;
 var die : Die;
 
 function Update () {
-	var die : Die = GetComponent(Die);
+	var die : Die = gameObject.GetComponent(Die);
 	var utilityKey: UtilityKey = GetComponent(UtilityKey);
 	
 	if (Input.GetButtonDown ("Fire1") && utilityKey.ammoCount > 0){
@@ -13,9 +13,8 @@ function Update () {
 		
 		utilityKey.ammoCount -= 1;
 		
-		if (!audio.isPlaying){
-			audio.Play();
-		}
+		audio.Play();
+		
 		
 	}
 	if (Input.GetButtonDown ("Fire2") ){
