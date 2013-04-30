@@ -5,7 +5,7 @@ var interval : float;
 
 function Start(){
 	interval = aiDirector.ammoTimer;
-	InvokeRepeating("spawnAmmo", 0, 3.0);
+	InvokeRepeating("spawnAmmo", 0, 30.0);
 }
 
 function Update(){

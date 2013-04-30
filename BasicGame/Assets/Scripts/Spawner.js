@@ -89,25 +89,24 @@ function Update() {
 }
 
 function spawnEnemy(){
-	//var pos : Vector3 = Vector3(5,1.3,1.5);
-	var posArray = new Array(Vector3(19.25551,1.3,17.81644),Vector3(-25.39346,1.3,-15.63889),Vector3(14.38626,1.3,-16.83782));
-	var enemy : GameObject = Instantiate(Resources.Load("CaveWorm_anim")) as GameObject;
-	var index : int = Random.Range(1,4) -1;
-	var hitColliders = Physics.OverlapSphere(posArray[index], 1.0f);
-	if (hitColliders != 1){ 
-		enemy.transform.position = posArray[index];
-	}
-		//Instantiate(enemy, pos, Quaternion.identity);
-	numEnemy++;
-	spawnedEnemy++;
-}
+
+	var spawnPoints = GameObject.FindGameObjectsWithTag ("enemySpawnPoint");
+	if (spawnPoints && spawnPoints.length > 0){
+
+		var enemy : GameObject = Instantiate(Resources.Load("CaveWorm_anim")) as GameObject;
+		var index : int = Random.Range(0,spawnPoints.length-1);
+		enemy.transform.position = spawnPoints[index].transform.position;
+
+		numEnemy++;
+		spawnedEnemy++;
+}}
 
 function OnDrawGizmos(){
 	var posArray = new Array(Vector3(19.25551,1.3,17.81644),Vector3(-27.39346,1.3,-15.63889),Vector3(14.38626,1.3,-17.83782));
 	Gizmos.color = Color.green;
-	Gizmos.DrawSphere(Vector3(19.25551,1.3,17.81644), 1);
-	Gizmos.DrawSphere(Vector3(-25.39346,1.3,-15.63889), 1);
-	Gizmos.DrawSphere(Vector3(14.38626,1.3,-16.83782), 1);
+	//Gizmos.DrawSphere(Vector3(19.25551,1.3,17.81644), 1);
+	//Gizmos.DrawSphere(Vector3(-25.39346,1.3,-15.63889), 1);
+	//Gizmos.DrawSphere(Vector3(14.38626,1.3,-16.83782), 1);
 
 }
     

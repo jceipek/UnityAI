@@ -4,7 +4,7 @@ var characterHealth : CharacterHealth;
 
 function OnControllerColliderHit(hit : ControllerColliderHit){
 	if (hit.collider.gameObject.name != "Floor")
-		Debug.Log(hit.collider.gameObject.tag + hit.collider.gameObject);
+		//Debug.Log(hit.collider.gameObject.tag + hit.collider.gameObject);
 	if (hit.collider.gameObject.tag == "Player"){
 		//Debug.Log("hit");
 		if (characterHealth.hp)
