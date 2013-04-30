@@ -8,12 +8,11 @@ function Start () {
 	arena = GameObject.FindWithTag ("Respawn");
 	aiDirector = arena.GetComponent(AIDirector);
 	hp = aiDirector.enemyHP;
-
 }
 
 function ApplyDamage (damage : float) {
         hp -= damage;
-    }
+}
     
 function Update () {
 

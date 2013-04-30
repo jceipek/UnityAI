@@ -62,10 +62,10 @@ function determineDifficulty(ammo : int, hp : int){
 	if (hp <= 30 && ammo <= 30){
 		difficulty = Difficulties.Easy;
 	}
-	else if (hp <= 50 && ammo <= 50){
+	else if (30 < hp &&hp < 50 && ammo <= 50){
 		difficulty = Difficulties.Medium;
 	}
-	else if (hp <= 75 && ammo <100){
+	else if (50 < hp && hp < 75 && ammo <100){
 		difficulty = Difficulties.Hard;
 	}
 	else if (ammo >200){
