@@ -21,3 +21,8 @@ function OnTriggerExit(other : Collider){
     
 
 }
+
+function OnDrawGizmos () {
+	Gizmos.color = Color.red;
+	Gizmos.DrawCube(transform.position, Vector3.one);
+}

@@ -234,92 +234,97 @@ function FunnelAlgorithm (startPt : Vector3, goalPt : Vector3, agentUp : Vector3
 
 	var apexIndex : int = 0; var leftIndex : int = 0; var rightIndex : int = 0;
 
-	var portalApex : Vector3 = start.gameObject.transform.position; //set to current position
-	var portalLeft : Vector3 = edgeList[1,1];
-	var portalRight: Vector3 = edgeList[1,0];
-	
-	// Add Start Point
-	//smoothedPath.Add(portalApex);
-	smoothedPath.Add(goalPt);
-
 	// Because of the way Unity JS handles arrays
 	var totalEdgeCount : int = edgeList.Length/2;
 
-	var edgeIdx : int;
-	var vertIdx : int;
-	var triArea : float;
+	if (totalEdgeCount > 1) {
+		var portalApex : Vector3 = start.gameObject.transform.position; //set to current position
+		var portalLeft : Vector3 = edgeList[1,1];
+		var portalRight: Vector3 = edgeList[1,0];
+		
+		// Add Start Point
+		//smoothedPath.Add(portalApex);
+		smoothedPath.Add(goalPt);
 
-	var tentativeLeft : Vector3; var tentativeRight : Vector3;
+		var edgeIdx : int;
+		var vertIdx : int;
+		var triArea : float;
 
-	//var prevTriArea : float = TriArea2(portalApex, portalLeft, portalRight);
+		var tentativeLeft : Vector3; var tentativeRight : Vector3;
 
-	for (edgeIdx = 1; edgeIdx < totalEdgeCount; edgeIdx++) {
-		tentativeLeft = edgeList[edgeIdx,1];
-		tentativeRight = edgeList[edgeIdx,0];
+		//var prevTriArea : float = TriArea2(portalApex, portalLeft, portalRight);
+
+		for (edgeIdx = 1; edgeIdx < totalEdgeCount; edgeIdx++) {
+			tentativeLeft = edgeList[edgeIdx,1];
+			tentativeRight = edgeList[edgeIdx,0];
 
 
-		// Try to move right point to right vertex of next portal
-		triArea = TriArea2(portalApex, portalRight, tentativeRight);
-		// If inside Funnel:
-		if (triArea >= 0.0) {
-			if (EqualVertices(portalApex,portalRight) || TriArea2(portalApex, portalLeft, tentativeRight) < 0.0) {
-				//Debug.Log("In Right at "+edgeIdx);
-				// Narrow the funnel
-				portalRight = tentativeRight;
-				rightIndex = edgeIdx;
+			// Try to move right point to right vertex of next portal
+			triArea = TriArea2(portalApex, portalRight, tentativeRight);
+			// If inside Funnel:
+			if (triArea >= 0.0) {
+				if (EqualVertices(portalApex,portalRight) || TriArea2(portalApex, portalLeft, tentativeRight) < 0.0) {
+					//Debug.Log("In Right at "+edgeIdx);
+					// Narrow the funnel
+					portalRight = tentativeRight;
+					rightIndex = edgeIdx;
+				}
+				
+			} else {
+				smoothedPath.Add(portalLeft);
+
+				// Make current left the new apex.
+				portalApex = portalLeft;
+				apexIndex = leftIndex;
+
+				// Reset portal
+				portalLeft = portalApex;
+				portalRight = portalApex;
+				leftIndex = apexIndex;
+				rightIndex = apexIndex;
+
+				// Restart scan
+				edgeIdx = apexIndex; // Restart at portal where left point came from
+				continue;
 			}
-			
-		} else {
-			smoothedPath.Add(portalLeft);
 
-			// Make current left the new apex.
-			portalApex = portalLeft;
-			apexIndex = leftIndex;
 
-			// Reset portal
-			portalLeft = portalApex;
-			portalRight = portalApex;
-			leftIndex = apexIndex;
-			rightIndex = apexIndex;
+			// Try to move left point to left vertex of next portal
+			triArea = TriArea2(portalApex, portalLeft, tentativeLeft);
+			// If inside Funnel:
+			if (triArea <= 0.0) {
+				if (EqualVertices(portalApex,portalLeft) || TriArea2(portalApex, portalRight, tentativeLeft) > 0.0) {
+					//Debug.Log("In Left at "+edgeIdx);
+					// Narrow the funnel
+					portalLeft = tentativeLeft;
+					leftIndex = edgeIdx;
+				}
+			} else {
+				smoothedPath.Add(portalRight);
 
-			// Restart scan
-			edgeIdx = apexIndex; // Restart at portal where left point came from
-			continue;
+				// Make current right the new apex.
+				portalApex = portalRight;
+				apexIndex = rightIndex;
+
+				// Reset portal
+				portalLeft = portalApex;
+				portalRight = portalApex;
+				leftIndex = apexIndex;
+				rightIndex = apexIndex;
+
+				// Restart scan			
+				edgeIdx = rightIndex; // Restart at portal where right point came from
+				continue;
+			}
+
 		}
 
-
-		// Try to move left point to left vertex of next portal
-		triArea = TriArea2(portalApex, portalLeft, tentativeLeft);
-		// If inside Funnel:
-		if (triArea <= 0.0) {
-			if (EqualVertices(portalApex,portalLeft) || TriArea2(portalApex, portalRight, tentativeLeft) > 0.0) {
-				//Debug.Log("In Left at "+edgeIdx);
-				// Narrow the funnel
-				portalLeft = tentativeLeft;
-				leftIndex = edgeIdx;
-			}
-		} else {
-			smoothedPath.Add(portalRight);
-
-			// Make current right the new apex.
-			portalApex = portalRight;
-			apexIndex = rightIndex;
-
-			// Reset portal
-			portalLeft = portalApex;
-			portalRight = portalApex;
-			leftIndex = apexIndex;
-			rightIndex = apexIndex;
-
-			// Restart scan			
-			edgeIdx = rightIndex; // Restart at portal where right point came from
-			continue;
-		}
-
+		smoothedPath.Add(startPt);
+		return smoothedPath;		
+	} else {
+		return smoothedPath;
 	}
 
-	smoothedPath.Add(startPt);
-	return smoothedPath;
 }
 
 //-------------------------------------------------------------------
