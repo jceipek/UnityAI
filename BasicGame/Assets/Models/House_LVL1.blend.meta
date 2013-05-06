@@ -9,27 +9,42 @@ ModelImporter:
     100006: StairRamp
     100008: Walls
     100010: Navmesh
+    100012: Cylinder
+    100014: Lamp
+    100016: Floor_001
     400000: Floor
     400002: //RootNode
     400004: Stair
     400006: StairRamp
     400008: Walls
     400010: Navmesh
+    400012: Cylinder
+    400014: Lamp
+    400016: Floor_001
     2300000: Floor
     2300002: Stair
     2300004: StairRamp
     2300006: Walls
     2300008: Navmesh
+    2300010: Cylinder
+    2300012: Lamp
+    2300014: Floor_001
     3300000: Floor
     3300002: Stair
     3300004: StairRamp
     3300006: Walls
     3300008: Navmesh
+    3300010: Cylinder
+    3300012: Lamp
+    3300014: Floor_001
     4300000: Floor
     4300002: Stair
     4300004: StairRamp
     4300006: Walls
     4300008: Navmesh
+    4300010: Cylinder
+    4300012: Lamp
+    4300014: Floor_001
     7400000: Default Take
     9500000: //RootNode
   materials:
