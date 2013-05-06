@@ -10,7 +10,7 @@ public enum Difficulties {
 }
 var characterHealth : CharacterHealth;
 var utilityKey : UtilityKey;
-public var difficulty : Difficulties = Difficulties.Easy; 
+public var difficulty : Difficulties; 
 var enemyHP : int;
 var totalEnemy : int;
 var ammoTimer : float;
@@ -59,16 +59,16 @@ function Update(){
 
 function determineDifficulty(ammo : int, hp : int){
 
-	if (hp <= 30 && ammo <= 30){
+	if (hp <= 30 || ammo <= 10){
 		difficulty = Difficulties.Easy;
 	}
-	else if (30 < hp &&hp < 50 && ammo <= 50){
+	else if (hp > 50 && ammo > 20){
 		difficulty = Difficulties.Medium;
 	}
-	else if (50 < hp && hp < 75 && ammo <100){
+	else if (hp > 75 && ammo >40){
 		difficulty = Difficulties.Hard;
 	}
-	else if ( ammo >200){
+	else if (ammo > 200){
 		difficulty = Difficulties.DanteMustDie;
 	}
 }
