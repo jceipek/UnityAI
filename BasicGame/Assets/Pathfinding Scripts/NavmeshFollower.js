@@ -7,6 +7,8 @@
 
 import System.Collections.Generic;
 
+var fakeGravity : float;
+
 var followRadiusSpeedFactor : float;
 var followRadius : float;
 var prevPoint : Vector3;
@@ -87,6 +89,8 @@ function Update () {
 //		Debug.Log("Move!");
 		controller.Move(transform.forward * moveSpeed * dTime);
 	}
+
+	controller.Move(-1 * transform.up * fakeGravity * dTime);
 
 	timeTillRecompute -= Time.deltaTime;
 
