@@ -15,10 +15,12 @@ function Awake(){
 	characterHealth = thePlayer.GetComponent(CharacterHealth);
 }
 
-function OnTriggerEnter (other : Collider) {
+function OnTriggerEnter(other : Collider) {
 	if (other.gameObject.tag == "Enemy") {
 		if (characterHealth.hp) {
 			characterHealth.hp-=10;
+			
 		}
 	}
+	//WaitForSeconds(5.0);
 }
