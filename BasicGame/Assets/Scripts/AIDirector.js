@@ -68,7 +68,7 @@ function determineDifficulty(ammo : int, hp : int){
 	else if (50 < hp && hp < 75 && ammo <100){
 		difficulty = Difficulties.Hard;
 	}
-	else if (hp > 90 || ammo >200){
+	else if ( ammo >200){
 		difficulty = Difficulties.DanteMustDie;
 	}
 }

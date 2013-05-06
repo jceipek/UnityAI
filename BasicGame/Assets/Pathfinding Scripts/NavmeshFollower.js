@@ -84,7 +84,7 @@ function Update () {
 			rotation = Quaternion.LookRotation(currProjectionVector-currLocVector);
 	    	transform.rotation = Quaternion.Lerp (transform.rotation, rotation, dTime * turnSpeed);
 		}
-		Debug.Log("Move!");
+//		Debug.Log("Move!");
 		controller.Move(transform.forward * moveSpeed * dTime);
 	}
 
