@@ -12,6 +12,8 @@ function Start () {
 
 function ApplyDamage (damage : float) {
         hp -= damage;
+        animation.Play("dead", PlayMode.StopSameLayer);
+        animation.Play("walk");
 }
     
 function Update () {
