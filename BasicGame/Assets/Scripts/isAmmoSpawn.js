@@ -1,6 +1,5 @@
 #pragma strict
 
-var other : GameObject;
 var SpawnPoint : Transform;
 var spawnPoint : GameObject;
 collider.isTrigger = true;

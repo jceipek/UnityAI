@@ -1,6 +1,5 @@
 #pragma strict
 
-var other : GameObject;
 var SpawnPoint : Transform;
 var spawnPoint : GameObject;
 collider.isTrigger = true;
@@ -16,7 +15,7 @@ function OnTriggerStay(other : Collider){
  
 
 function OnTriggerExit(other : Collider){
-
+	//Debug.Log("empty");
     spawnPoint.tag = "healthSpawnPoint";
 
 }
