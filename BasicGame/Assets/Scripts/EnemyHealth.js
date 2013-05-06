@@ -13,6 +13,7 @@ function Start () {
 function ApplyDamage (damage : float) {
         hp -= damage;
         animation.Play("dead", PlayMode.StopSameLayer);
+        yield WaitForAnimation( animation );
         animation.Play("walk");
 }
     
@@ -23,4 +24,9 @@ function Update () {
 		arena.SendMessage("killEnemy",SendMessageOptions.DontRequireReceiver);
 	}
 
+}
+
+function WaitForAnimation ( animation : Animation )
+{
+    yield; while ( animation.isPlaying ) yield;
 }
