@@ -1,8 +1,8 @@
 #pragma strict
 
-// Copyright (C) 2013 Julian Ceipek
+// Copyright (C) 2013 Julian Ceipek and Alex Adkins
 //
-// A component that makes an object randomly follow connected Waypoints.
+// A component that makes an object follow Waypoints on a navmesh in sequence.
 //
 
 import System.Collections.Generic;
@@ -25,8 +25,11 @@ private var controller : CharacterController;
 private var predictedPt : Vector3;
 private var projectedPt : Vector3;
 
-public var recomputeStepTime : float = 0.0;
-private var timeTillRecompute : float = 0.0;
+public var recomputePathTimeInterval : float = 0.0;
+private var timeTillRecomputePath : float = 0.0;
+
+public var raycastTimeInterval : float = 0.0;
+private var timeTillLocalRaycast : float = 0.0;
 
 function Start () {
 	controller = GetComponent(CharacterController);
@@ -41,23 +44,18 @@ function Start () {
 
 function RecomputePath () {
 	
- 	//Debug.Log(endPoint);
- 	//Debug.Log(currPoint);
- 	//Debug.Log("Finding Points...");
  	if (!(aiSystem.GetTriangleWaypointOfPoint(transform.position) == null) &&
  		!(aiSystem.GetTriangleWaypointOfPoint(endTransform.position) == null)) {
  		endPoint = endTransform.position;
  		currPoint = transform.position;
  		
  		pathPoints = aiSystem.FunnelAlgorithm(currPoint, endPoint, gameObject.transform.up);
- 		timeTillRecompute = recomputeStepTime;
+ 		timeTillRecomputePath = recomputePathTimeInterval;
  	}
 	
 }
 
 function Update () {
-	//var o : Vector3 = new Vector3(currPoint.x, 0, currPoint.z);
-
 	var rotation : Quaternion;
 	var dTime : float = Time.deltaTime;
 	//Uses vector and speed to predict next position of char
@@ -69,7 +67,7 @@ function Update () {
 	var currProjectionVector : Vector3 = new Vector3(projectedPt.x, 0, projectedPt.z);
 	var currLocVector : Vector3 = new Vector3(transform.position.x, 0, transform.position.z);
 
-	if (endPoint != endTransform.position && timeTillRecompute <= 0.0) {
+	if (endPoint != endTransform.position && timeTillRecomputePath <= 0.0) {
 		RecomputePath();
 	}
 
@@ -90,9 +88,10 @@ function Update () {
 		controller.Move(transform.forward * moveSpeed * dTime);
 	}
 
+	// Apply gravity
 	controller.Move(-1 * transform.up * fakeGravity * dTime);
 
-	timeTillRecompute -= Time.deltaTime;
+	timeTillRecomputePath -= Time.deltaTime;
 
 }
 
