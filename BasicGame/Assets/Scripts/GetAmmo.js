@@ -6,6 +6,7 @@ var ammoIncrease : int;
 private var characterHealth : CharacterHealth = null;
 
 function Awake(){
+	ammoIncrease = 20;
 	var thePlayer = GameObject.FindWithTag("Player");
 	characterHealth = thePlayer.GetComponent(CharacterHealth);
 }
