@@ -18,7 +18,7 @@ function Awake(){
 function OnTriggerEnter (other : Collider) {
 	if (other.gameObject.tag == "Enemy") {
 		if (characterHealth.hp) {
-			characterHealth.hp--;
+			characterHealth.hp-=10;
 		}
 	}
 }

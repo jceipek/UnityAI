@@ -9,4 +9,8 @@ function OnGUI () {
 	GUI.Box (new Rect (Screen.width - 100,Screen.height - 50,100,50), ammoString);
 	//GUI.Box (new Rect (0,0,100,50), "HP \n" + characterHealth.hp);
 
+	if (characterHealth.hp == 0) {
+		GUI.Box(new Rect (Screen.width/2-50, Screen.height/2-20, 100, 20), "YOU DIED");
+	
+	}
 }
