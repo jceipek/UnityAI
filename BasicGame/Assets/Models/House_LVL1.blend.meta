@@ -12,6 +12,12 @@ ModelImporter:
     100012: Cylinder
     100014: Lamp
     100016: Floor_001
+    100018: Lamp_001
+    100020: Lamp_002
+    100022: Lamp_003
+    100024: Lamp_004
+    100026: Lamp_005
+    100028: Lamp_006
     400000: Floor
     400002: //RootNode
     400004: Stair
@@ -21,6 +27,12 @@ ModelImporter:
     400012: Cylinder
     400014: Lamp
     400016: Floor_001
+    400018: Lamp_001
+    400020: Lamp_002
+    400022: Lamp_003
+    400024: Lamp_004
+    400026: Lamp_005
+    400028: Lamp_006
     2300000: Floor
     2300002: Stair
     2300004: StairRamp
@@ -29,6 +41,12 @@ ModelImporter:
     2300010: Cylinder
     2300012: Lamp
     2300014: Floor_001
+    2300016: Lamp_001
+    2300018: Lamp_002
+    2300020: Lamp_003
+    2300022: Lamp_004
+    2300024: Lamp_005
+    2300026: Lamp_006
     3300000: Floor
     3300002: Stair
     3300004: StairRamp
@@ -37,6 +55,12 @@ ModelImporter:
     3300010: Cylinder
     3300012: Lamp
     3300014: Floor_001
+    3300016: Lamp_001
+    3300018: Lamp_002
+    3300020: Lamp_003
+    3300022: Lamp_004
+    3300024: Lamp_005
+    3300026: Lamp_006
     4300000: Floor
     4300002: Stair
     4300004: StairRamp
@@ -45,6 +69,12 @@ ModelImporter:
     4300010: Cylinder
     4300012: Lamp
     4300014: Floor_001
+    4300016: Lamp_006
+    4300018: Lamp_005
+    4300020: Lamp_004
+    4300022: Lamp_003
+    4300024: Lamp_002
+    4300026: Lamp_001
     7400000: Default Take
     9500000: //RootNode
   materials:

@@ -3,6 +3,7 @@
 // Copyright (C) 2013 Julian Ceipek and Alex Adkins
 //
 // A component that makes an object follow Waypoints on a navmesh in sequence.
+// It implements basic steering behavior.
 //
 
 import System.Collections.Generic;
@@ -31,6 +32,9 @@ private var timeTillRecomputePath : float = 0.0;
 public var raycastTimeInterval : float = 0.0;
 private var timeTillLocalRaycast : float = 0.0;
 
+public var avoidanceDistance : float = 0.0;
+private var avoidanceCastOffset : float = 1.2;
+
 function Start () {
 	controller = GetComponent(CharacterController);
 	var aiSystemContainer : GameObject;
@@ -40,6 +44,21 @@ function Start () {
 	if (endTransform != null) {
 		RecomputePath();
 	}
+}
+
+function AvoidWalls () {
+	var hit : RaycastHit;
+	if (Physics.Raycast (transform.position+transform.right*avoidanceCastOffset, transform.right, hit)) {
+		if (hit.distance <= avoidanceDistance) {
+			controller.Move(transform.right * moveSpeed * Time.deltaTime);
+		}
+	}
+	if (Physics.Raycast (transform.position+(transform.right * -1)*avoidanceCastOffset, (transform.right * -1), hit)) {
+		if (hit.distance <= avoidanceDistance) {
+			controller.Move((transform.right * -1) * moveSpeed * Time.deltaTime);
+		}
+	}
+
 }
 
 function RecomputePath () {
@@ -93,6 +112,7 @@ function Update () {
 
 	timeTillRecomputePath -= Time.deltaTime;
 
+	AvoidWalls();
 }
 
 
@@ -140,4 +160,10 @@ function OnDrawGizmos () {
 	Gizmos.DrawWireSphere(predictedPt, 0.3f);
 	Gizmos.color = Color.black;
 	Gizmos.DrawWireSphere(projectedPt, 0.3f);
+
+	Gizmos.color = Color.magenta;
+	Gizmos.DrawWireCube(transform.position+transform.right*avoidanceCastOffset, Vector3.one*0.3);
+
+	Gizmos.color = Color.magenta;
+	Gizmos.DrawWireCube(transform.position+transform.right*-avoidanceCastOffset, Vector3.one*0.3);
 }

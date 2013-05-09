@@ -7,7 +7,7 @@ collider.isTrigger = true;
 
 
 
-function OnTriggerStay(other : Collider){
+function OnTriggerStay(other : Collider){ //Not a spawn point when enemy in region,  prevent spiders from being on top of each other
 	//Debug.Log("stay");
     gameObject.tag = "Untagged";
 
@@ -15,14 +15,14 @@ function OnTriggerStay(other : Collider){
 
  
 
-function OnTriggerExit(other : Collider){
+function OnTriggerExit(other : Collider){ // When spawn point unoccupied, declare valid spawn point
 
     spawnPoint.tag = "enemySpawnPoint";
     
 
 }
 
-function OnDrawGizmos () {
+function OnDrawGizmos () { //show location of spawn point for devs
 	Gizmos.color = Color.red;
 	Gizmos.DrawCube(transform.position, Vector3.one);
 }

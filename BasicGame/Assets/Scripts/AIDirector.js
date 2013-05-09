@@ -1,5 +1,6 @@
 #pragma strict
 
+//create list of modes
 public enum Difficulties {
 
 	Easy,
@@ -8,6 +9,8 @@ public enum Difficulties {
 	DanteMustDie
 
 }
+
+//set variables
 var characterHealth : CharacterHealth;
 var utilityKey : UtilityKey;
 public var difficulty : Difficulties; 
@@ -16,13 +19,14 @@ var totalEnemy : int;
 var ammoTimer : float;
 
 function Update(){
-
+	//update variables in other scripts
 	var ammo = utilityKey.ammoCount;
 	var hp = characterHealth.hp;
 
+	//check to see if the difficulty needs to be switches
 	determineDifficulty(ammo,hp);
 
-	if(difficulty == Difficulties.Easy){
+	if(difficulty == Difficulties.Easy){ //easy mode variables
 	
 	enemyHP = 1;
 	totalEnemy = 3;
@@ -54,18 +58,20 @@ function Update(){
 
 }
 
-//other factor to include, maybe add a timer? For every minute key is not found, increase difficulty?
+//Things to consider is we expand to goal oriented game model:
+//Other factor to include, maybe add a timer? For every minute key is not found, increase difficulty?
 
-
+//change difficulty based on player reasources
 function determineDifficulty(ammo : int, hp : int){
-
+	//Debug.Log(hp);
+	//Debug.Log(ammo);
 	if (hp <= 30 || ammo <= 10){
 		difficulty = Difficulties.Easy;
 	}
-	else if (hp > 50 && ammo > 20){
+	else if (hp > 50 && ammo > 20 && hp < 80){
 		difficulty = Difficulties.Medium;
 	}
-	else if (hp > 75 && ammo >40){
+	else if (hp > 80 && ammo >40 && ammo > 200){
 		difficulty = Difficulties.Hard;
 	}
 	else if (ammo > 200){

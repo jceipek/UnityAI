@@ -7,7 +7,7 @@ function Update () {
 	var die : Die = gameObject.GetComponent(Die);
 	var utilityKey: UtilityKey = GetComponent(UtilityKey);
 	
-	if (Input.GetButtonDown ("Fire1") && utilityKey.ammoCount > 0){
+	if (Input.GetButtonDown ("Fire1") && utilityKey.ammoCount > 0){ //call Fire Gun on mouse click, subtract 1 ammo
 		
 		die.Fire();
 		
@@ -16,11 +16,6 @@ function Update () {
 		audio.Play();
 		
 		
-	}
-	if (Input.GetButtonDown ("Fire2") ){
-		
-		utilityKey.pickUpAmmo();
-	
 	}
 }
 

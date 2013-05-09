@@ -1,10 +1,14 @@
 #pragma strict
 
+//Based on C# Spawner Script of  Garth de Wet (Corrupted Heart) at mydeathofme[at]gmail[dot]com
+
+
 //enemy settings
 public var numEnemy : int = 0;
 public var totalEnemy : int;
 public var spawnedEnemy : int = 0;
 
+//types of spawning
 public enum SpawnTypes {
 
 	Normal,
@@ -14,14 +18,12 @@ public enum SpawnTypes {
 
 }
 
+//default state is normal
 var spawnType : SpawnTypes = SpawnTypes.Normal; 
-
-private var SpawnID : int;
 
 //Spawn States
 private var waveSpawn : boolean = false;
 public var Spawn : boolean = true;
-//public SpawnTypes spawnType = SpawnTypes.Normal;
 public var waveTimer : float = 30.0f;
 private var timeTillWave : float = 0.0f;
 public var totalWaves : int = 5;
@@ -29,21 +31,18 @@ private var numWaves : int = 0;
 
 var aiDirector : AIDirector;
 
-function Start () {
-	SpawnID = Random.Range(1,500);
-}
-
 function Update() {
 
+	//change variable based on AI director's settings
 	totalEnemy = aiDirector.totalEnemy;
 
 	if(Spawn){
-		if (spawnType == SpawnTypes.Normal){
+		if (spawnType == SpawnTypes.Normal){ //Normal Mode: When one enemy is destroy, spawn a new one it ints place
 			if(numEnemy < totalEnemy){
 				spawnEnemy();
 			}
 		}
-		else if (spawnType == SpawnTypes.Once){
+		else if (spawnType == SpawnTypes.Once){ //Once Mode: Spawn Enemies until reach max number of enemies, then never spawn again
 			if(spawnedEnemy >= totalEnemy){
 				Spawn = false;
 			}
@@ -51,7 +50,7 @@ function Update() {
 				spawnEnemy();
 			}
 		}
-		else if (spawnType == SpawnTypes.Wave){
+		else if (spawnType == SpawnTypes.Wave){ //Spawn in waves, spawn to max number totalWaves # amount of times
 			if(numWaves < totalWaves + 1){
 				if (waveSpawn){
 					spawnEnemy();
@@ -65,7 +64,7 @@ function Update() {
 				}
 			}
 		}
-		else if (spawnType == SpawnTypes.TimedWave){
+		else if (spawnType == SpawnTypes.TimedWave){ //Wave is based on timer
 			if (numWaves <= totalWaves){
 				timeTillWave += Time.deltaTime;
 				if (waveSpawn){
@@ -88,7 +87,7 @@ function Update() {
 	}
 }
 
-function spawnEnemy(){
+function spawnEnemy(){ //Instantiate an Enemy at availble spawn point
 
 	var spawnPoints = GameObject.FindGameObjectsWithTag ("enemySpawnPoint");
 	if (spawnPoints && spawnPoints.length > 0){
@@ -101,28 +100,6 @@ function spawnEnemy(){
 		spawnedEnemy++;
 }}
 
-function OnDrawGizmos(){
-	var posArray = new Array(Vector3(19.25551,1.3,17.81644),Vector3(-27.39346,1.3,-15.63889),Vector3(14.38626,1.3,-17.83782));
-	Gizmos.color = Color.green;
-	//Gizmos.DrawSphere(Vector3(19.25551,1.3,17.81644), 1);
-	//Gizmos.DrawSphere(Vector3(-25.39346,1.3,-15.63889), 1);
-	//Gizmos.DrawSphere(Vector3(14.38626,1.3,-16.83782), 1);
-}
-    
-function killEnemy(){
+function killEnemy(){ //decrease enemy number variable when one is killed
 	numEnemy--;
-}
-
-function enableSpawner(sID : int){
-	if (SpawnID == sID){
-		Spawn = false;
-	}
-}
-
-function TimeTillWave(){
-	return timeTillWave;
-}
-
-function enableTrigger(){
-	Spawn = true;
 }
