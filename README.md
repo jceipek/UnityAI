@@ -13,13 +13,18 @@ Reusable Artificial Intelligence Experiments
 - Random waypoint navigation
 - Waypoint to waypoint following using Pathfinder
 - Navigation mesh processor in the Tools Menu (creates a NavmeshNode network with triangles and vertices from a selected mesh)
+- Pathing for navigation meshes
+- Funnel algorithm for navigation meshes
+- Steering behavior for path following
+- A basic FPS with path following spiders, ammo, and health spawned by an AI director
 
-## TODO (in order of importance)
+# Script Locations
 
-- Allow Waypoint followers to go "off-path" to reach goals close to waypoints (optional)
-- Add pathing for navigation meshes
-- Add funnel algorithm for navigation meshes
-- Restructure `Assets/Editor/PathfindingEditor.js`, which is badly written
+This project includes 2 Unity projects:
+- UnityPathing (a sandbox project for pathfinding experiments)
+- BasicGame (the FPS demo with pathfinding and an AI director)
+
+Planning scripts are located in `BasicGame/Assets/Pathfinding Scripts` and gameplay/director scripts are located in `BasicGame/Assets/Scripts`
 
 ##License: MIT
 
